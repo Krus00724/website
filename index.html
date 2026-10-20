@@ -18,6 +18,8 @@
   --footh:48px;
   --side:clamp(40px,7vw,150px);
   --tight:clamp(8px,.9vw,14px);
+  --shoth:calc(100vh - var(--barh) - var(--footh) - 52px);
+  --shotw:min(84vw,1250px);
   --sans:"Helvetica Neue",Helvetica,Arial,"Arimo",sans-serif;
   --ease:cubic-bezier(.2,.7,.2,1);
 }
@@ -95,18 +97,14 @@ p,h1,h2,figure,dl{margin:0}
 
 .pg{min-height:calc(100vh - var(--barh));scroll-snap-align:start;padding:26px var(--side) calc(var(--footh) + 26px);display:grid;align-content:center;justify-items:center;row-gap:24px}
 
-/* opening page of a project: hero + short description */
-.pg-open{grid-template-rows:minmax(0,1fr) auto;align-content:stretch}
-.hero{position:relative;width:100%;max-width:min(74vw,1060px);align-self:stretch;min-height:0;display:flex;align-items:center;justify-content:center}
-.desc{max-width:64ch;font-size:15.5px;line-height:1.42}
+/* the hero sits in the same box every photograph gets */
+.hero{position:relative;width:100%;max-width:var(--shotw);height:var(--shoth);display:flex;align-items:center;justify-content:center}
 
 /* photographs are never cropped */
-.shot{width:auto;height:auto;max-width:min(74vw,1060px);max-height:70vh;object-fit:contain}
-.row{display:flex;align-items:flex-start;gap:var(--tight);width:100%;max-width:min(1600px, calc(70vh * var(--sum) + var(--tight) * (var(--n) - 1)))}
-.row img{flex:var(--ar) 1 0%;min-width:0;height:auto}
+.shot{width:auto;height:auto;max-width:var(--shotw);max-height:var(--shoth);object-fit:contain}
 
 /* the logo set: each version on white, the same on black beneath it, nothing cropped */
-.marks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto;grid-auto-flow:column;gap:var(--tight);width:100%;max-width:min(1600px, calc((70vh - var(--tight)) * 2.25 + var(--tight) * 2))}
+.marks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--tight);width:100%;max-width:calc(var(--shoth) - var(--tight))}
 .marks img{width:100%;height:auto}
 
 /* the shoot as a contact sheet: in order, every row full width, nothing cropped */
@@ -115,14 +113,12 @@ p,h1,h2,figure,dl{margin:0}
 .g-item{flex:var(--ar) 1 0%;min-width:0;display:block;padding:0;border:0;background:none;cursor:zoom-in}
 .g-item img{width:100%;height:auto}
 
-/* photo projects open on one photograph with the words beside it, nothing cropped */
-.desc{text-wrap:pretty}
-.desc p + p{margin-top:.6em}
-.desc .ig{margin-top:1.1em}
-.desc .ig a{color:var(--mute);transition:color .25s var(--ease)}
-.desc .ig a:hover{color:var(--ink)}
-.pg-tell .shot{max-height:calc(100vh - var(--barh) - var(--footh) - var(--tell,170px))}
-.pg-tell .desc{max-width:48ch}
+/* the whole story of a project on one page */
+.pg-text .tx{max-width:54ch;font-size:clamp(15px,calc(10px + .95vh),18px);line-height:1.5;text-wrap:pretty}
+.pg-text p + p{margin-top:.8em}
+.pg-text .ig{margin-top:1.5em}
+.pg-text .ig a{color:var(--mute);transition:color .25s var(--ease)}
+.pg-text .ig a:hover{color:var(--ink)}
 
 /* one photograph at a time, click anywhere to close */
 .lb{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:var(--footh) var(--side);background:var(--bg);cursor:zoom-out;touch-action:none;
@@ -175,14 +171,10 @@ html.lb-open,html.lb-open body{overflow:hidden}
   .scroller{position:static;overflow:visible;scroll-snap-type:none}
   .pg{min-height:0;display:block;scroll-snap-align:none;padding:18px var(--margin) 46px}
   .pg > *{margin-left:auto;margin-right:auto}
-  .pg-open .hero{height:auto;aspect-ratio:3/4;max-width:none}
-  .desc{max-width:none;font-size:15px;margin-top:16px}
+  .hero{height:auto;aspect-ratio:3/4;max-width:none}
   .shot{max-width:100%;max-height:none}
-  .row{flex-direction:column;max-width:none}
-  .row img{flex:none;width:100%}
-  .pg-tell .shot{max-height:none}
-  .pg-tell .desc{max-width:none}
-  .marks{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row;max-width:none}
+  .pg-text .tx{max-width:none;font-size:17px}
+  .marks{max-width:none}
   .tx{max-width:none}
   .lede{font-size:21px;max-width:none}
   .body{font-size:15px;max-width:none;margin-top:14px}
@@ -218,58 +210,40 @@ html.lb-open,html.lb-open body{overflow:hidden}
 
       <!-- Ballanheim -->
       <div class="project" data-name="Ballanheim" data-meta="brand identity, photography and web, 2026">
-        <article class="pg pg-open">
-          <div class="hero"><div class="coinwrap"><canvas id="coin"></canvas></div></div>
-          <p class="desc">Ballanheim is a&nbsp;queer upcycling label from Berlin, run by Andrew, who turns discarded clothes into one-off pieces. I&nbsp;photographed the first campaign, built the identity around a&nbsp;single struck seal and wrote the website, so everything the label puts out is its own.</p>
+        <article class="pg"><div class="hero"><div class="coinwrap"><canvas id="coin"></canvas></div></div></article>
+        <article class="pg pg-text">
+          <div class="tx">
+            <p>Ballanheim is a&nbsp;queer upcycling label from Berlin, run by Andrew, who turns discarded clothes into one-off pieces. I&nbsp;photographed the first campaign, built the identity around a&nbsp;single struck seal and wrote the website, so everything the label puts out is its own.</p>
+            <p>I&nbsp;met Andrew when he was working a&nbsp;shift at the local Humana in one of his own outfits. The shop is also where a&nbsp;lot of his inspiration comes from, the locals who build a&nbsp;whole look out of worn second-hand pieces.</p>
+            <p>It took me about a&nbsp;minute to see that the style was not the only thing that was his, the vision was too. Everything he makes is built from recycled material.</p>
+            <p>When I&nbsp;interviewed him for the website, I&nbsp;learned that his goal is to make something deeply connected to his Scottish heritage and at the same time something rioting against the old scheme of things, which might be quite a&nbsp;common statement in Berlin nowadays.</p>
+            <p>Clothes, in his opinion, should have no gender, should be as comfortable as it gets and should work on the street as well as on the dancefloor, carrying fresh energy and rediscovered traditional patterns from his home country.</p>
+            <p>For the campaign he only wanted daylight, and a&nbsp;flash once it got too dark, to keep it raw.</p>
+          </div>
         </article>
-        <article class="pg pg-tell" style="--tell:196px">
-          <img decoding="async" class="shot" src="img/ballanheim/01-ballanheim-campaign-banner-black-timber.webp" width="2000" height="1333" alt="Ballanheim campaign banner on a black timber hoarding">
-          <p class="desc">I&nbsp;met Andrew when he was working a&nbsp;shift at the local Humana in one of his own outfits. The shop is also where a&nbsp;lot of his inspiration comes from, the locals who build a&nbsp;whole look out of worn second-hand pieces.</p>
-        </article>
+        <article class="pg"><img decoding="async" class="shot" src="img/ballanheim/01-ballanheim-campaign-banner-black-timber.webp" width="2000" height="1333" alt="Ballanheim campaign banner on a black timber hoarding"></article>
         <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/02-ballanheim-campaign-billboard-under-concrete.webp" width="2000" height="1333" alt="Ballanheim campaign billboard under a concrete canopy"></article>
-        <article class="pg pg-tell" style="--tell:174px">
-          <img decoding="async" loading="lazy" class="shot" src="img/ballanheim/03-ballanheim-campaign-poster-framed-weathered.webp" width="2000" height="1334" alt="Ballanheim campaign poster framed on a weathered wall">
-          <p class="desc">It took me about a&nbsp;minute to see that the style was not the only thing that was his, the vision was too. Everything he makes is built from recycled material.</p>
-        </article>
-        <article class="pg">
-          <div class="row" style="--sum:4.5000;--n:3">
-            <img decoding="async" loading="lazy" style="--ar:1.5000" src="img/ballanheim/04-ballanheim-business-cards-embossed-white.webp" width="1344" height="896" alt="Ballanheim business cards embossed on white and black stock">
-            <img decoding="async" loading="lazy" style="--ar:1.5000" src="img/ballanheim/05-ballanheim-invitation-cards-white-black.webp" width="1344" height="896" alt="Ballanheim invitation cards in white and black">
-            <img decoding="async" loading="lazy" style="--ar:1.5000" src="img/ballanheim/06-blind-embossed-ballanheim-cards-concrete.webp" width="1344" height="896" alt="Blind-embossed Ballanheim cards on concrete">
-          </div>
-        </article>
-        <article class="pg">
-          <div class="row" style="--sum:2.6667;--n:2">
-            <img decoding="async" loading="lazy" style="--ar:1.3333" src="img/ballanheim/07-ballanheim-seal-woven-into-garment-label.webp" width="1400" height="1050" alt="Ballanheim seal woven into a garment label">
-            <img decoding="async" loading="lazy" style="--ar:1.3333" src="img/ballanheim/08-ballanheim-seal-woven-label-straight.webp" width="1400" height="1050" alt="Ballanheim seal on a woven label, straight on">
-          </div>
-        </article>
-        <article class="pg pg-tell" style="--tell:196px">
-          <img decoding="async" loading="lazy" class="shot" src="img/ballanheim/09-ballanheim-website-laptop.webp" width="2000" height="1333" alt="Ballanheim website on a laptop">
-          <p class="desc">When I&nbsp;interviewed him for the website, I&nbsp;learned that his goal is to make something deeply connected to his Scottish heritage and at the same time something rioting against the old scheme of things, which might be quite a&nbsp;common statement in Berlin nowadays.</p>
-        </article>
-        <article class="pg">
-          <div class="marks">
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/03-ballanheim-campaign-poster-framed-weathered.webp" width="2000" height="1334" alt="Ballanheim campaign poster framed on a weathered wall"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/04-ballanheim-business-cards-embossed-white.webp" width="1344" height="896" alt="Ballanheim business cards embossed on white and black stock"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/05-ballanheim-invitation-cards-white-black.webp" width="1344" height="896" alt="Ballanheim invitation cards in white and black"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/06-blind-embossed-ballanheim-cards-concrete.webp" width="1344" height="896" alt="Blind-embossed Ballanheim cards on concrete"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/07-ballanheim-seal-woven-into-garment-label.webp" width="1400" height="1050" alt="Ballanheim seal woven into a garment label"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/08-ballanheim-seal-woven-label-straight.webp" width="1400" height="1050" alt="Ballanheim seal on a woven label, straight on"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/09-ballanheim-website-laptop.webp" width="2000" height="1333" alt="Ballanheim website on a laptop"></article>
+        <article class="pg"><div class="marks">
             <img decoding="async" loading="lazy" src="img/ballanheim/10-ballanheim-horizontal-logo-black-white.webp" width="1344" height="896" alt="Ballanheim horizontal logo, black on white">
             <img decoding="async" loading="lazy" src="img/ballanheim/11-ballanheim-horizontal-logo-white-black.webp" width="1344" height="896" alt="Ballanheim horizontal logo, white on black">
             <img decoding="async" loading="lazy" src="img/ballanheim/12-ballanheim-wordmark-black-white.webp" width="1344" height="896" alt="Ballanheim wordmark, black on white">
             <img decoding="async" loading="lazy" src="img/ballanheim/13-ballanheim-wordmark-white-black.webp" width="1344" height="896" alt="Ballanheim wordmark, white on black">
             <img decoding="async" loading="lazy" src="img/ballanheim/14-ballanheim-seal-black-white.webp" width="1344" height="896" alt="Ballanheim seal, black on white">
             <img decoding="async" loading="lazy" src="img/ballanheim/15-ballanheim-seal-white-black.webp" width="1344" height="896" alt="Ballanheim seal, white on black">
-          </div>
-        </article>
+          </div></article>
         <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/16-helvetica-neue-specimen-ballanheim-identity.webp" width="1456" height="840" alt="Helvetica Neue specimen from the Ballanheim identity"></article>
-        <article class="pg pg-tell" style="--tell:196px">
-          <img loading="lazy" class="shot" src="img/ballanheim/17-model-holding-weighted-pole-bare-concrete.webp" width="1600" height="1067" alt="Model holding a weighted pole in a bare concrete room" decoding="async">
-          <p class="desc">Clothes, in his opinion, should have no gender, should be as comfortable as it gets and should work on the street as well as on the dancefloor, carrying fresh energy and rediscovered traditional patterns from his home country.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/17-model-holding-weighted-pole-bare-concrete.webp" width="1600" height="1067" alt="Model holding a weighted pole in a bare concrete room" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/18-model-carrying-weighted-bar-across-shoulders.webp" width="1600" height="1067" alt="Model carrying the weighted bar across the shoulders" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/19-model-concrete-block-over-one-shoulder.webp" width="1067" height="1600" alt="Model with a concrete block over one shoulder" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/20-model-leaning-peeling-wall-beside-factory.webp" width="1067" height="1600" alt="Model leaning on a peeling wall beside a factory window" decoding="async"></article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/ballanheim/21-model-tartan-jacket-tiara-crouching-against.webp" width="1600" height="1067" alt="Model in a tartan jacket and tiara crouching against tiles" decoding="async">
-          <p class="desc">For the campaign he only wanted daylight, and a&nbsp;flash once it got too dark, to keep it raw.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/21-model-tartan-jacket-tiara-crouching-against.webp" width="1600" height="1067" alt="Model in a tartan jacket and tiara crouching against tiles" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/22-two-models-blue-tiled-room-one-red-dress.webp" width="1067" height="1600" alt="Two models in a blue-tiled room, one in a red dress" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/23-two-models-laughing-blue-tiled-room.webp" width="1600" height="1067" alt="Two models laughing in the blue-tiled room" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/24-model-red-dress-rusted-railing-platform.webp" width="1067" height="1600" alt="Model in a red dress on a rusted railing platform" decoding="async"></article>
@@ -283,59 +257,49 @@ html.lb-open,html.lb-open body{overflow:hidden}
 
       <!-- Gbenga -->
       <div class="project" data-name="Press photos for Gbenga" data-meta="photography and styling, 2024">
-        <article class="pg pg-tell" style="--tell:192px">
-          <img loading="lazy" class="shot" src="img/gbenga/01-gbenga-white-tank-top-street-front-large.webp" width="1067" height="1600" alt="Gbenga in a white tank top on a street in front of a large housing block" decoding="async">
-          <div class="desc">
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/01-gbenga-white-tank-top-street-front-large.webp" width="1067" height="1600" alt="Gbenga in a white tank top on a street in front of a large housing block" decoding="async"></article>
+        <article class="pg pg-text">
+          <div class="tx">
             <p>Gbenga is not only a&nbsp;very close friend I&nbsp;met two years ago, but also an extremely skilled up-and-coming DJ.</p>
+            <p>He has played across the globe, from Basement in NYC to numerous clubs and venues in Berlin such as OXI and Kwia. Currently based in Chicago, he is working on his own EP, coming out very soon.</p>
+            <p>Some of these pictures ended up as his press photos. I&nbsp;was also in charge of the styling.</p>
+            <p>My goal was to capture that eternal summer we met in, when everything seemed possible for a&nbsp;young aspiring artist.</p>
             <p class="ig"><a href="https://www.instagram.com/gbeng.a/" target="_blank" rel="noopener" aria-label="@gbeng.a on Instagram">@gbeng.a</a></p>
           </div>
         </article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/02-gbenga-leaning-white-wall-hands-behind-head.webp" width="1600" height="1067" alt="Gbenga leaning on a white wall with his hands behind his head" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/03-gbenga-arms-crossed-tall-grass-front.webp" width="1600" height="1067" alt="Gbenga with arms crossed in tall grass in front of a building" decoding="async"></article>
-        <article class="pg pg-tell" style="--tell:174px">
-          <img loading="lazy" class="shot" src="img/gbenga/04-gbenga-arms-crossed-grass-looking-side.webp" width="1600" height="1067" alt="Gbenga with arms crossed in the grass, looking to the side" decoding="async">
-          <p class="desc">He has played across the globe, from Basement in NYC to numerous clubs and venues in Berlin such as OXI and Kwia. Currently based in Chicago, he is working on his own EP, coming out very soon.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/04-gbenga-arms-crossed-grass-looking-side.webp" width="1600" height="1067" alt="Gbenga with arms crossed in the grass, looking to the side" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/05-gbenga-seen-below-against-rows-windows.webp" width="1067" height="1600" alt="Gbenga seen from below against rows of windows" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/06-gbenga-behind-stretching-arms-above-head.webp" width="1067" height="1600" alt="Gbenga from behind, stretching his arms above his head" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/07-gbenga-sitting-long-grass-silver-trainers.webp" width="1067" height="1600" alt="Gbenga sitting in long grass in silver trainers" decoding="async"></article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/gbenga/08-gbenga-lying-pavement-beside-concrete-wall.webp" width="1600" height="1067" alt="Gbenga lying on the pavement beside a concrete wall" decoding="async">
-          <p class="desc">Some of these pictures ended up as his press photos. I&nbsp;was also in charge of the styling.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/08-gbenga-lying-pavement-beside-concrete-wall.webp" width="1600" height="1067" alt="Gbenga lying on the pavement beside a concrete wall" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/09-gbenga-hanging-scaffolding-outside-red.webp" width="1067" height="1600" alt="Gbenga hanging from scaffolding outside a red building" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/10-gbenga-silhouette-against-red-white-road.webp" width="1067" height="1600" alt="Gbenga in silhouette against a red and white road barrier at dusk" decoding="async"></article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/gbenga/11-gbenga-yellow-light-beneath-large-number-9.webp" width="1067" height="1600" alt="Gbenga in yellow light beneath a large number 9" decoding="async">
-          <p class="desc">My goal was to capture that eternal summer we met in, when everything seemed possible for a&nbsp;young aspiring artist.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/11-gbenga-yellow-light-beneath-large-number-9.webp" width="1067" height="1600" alt="Gbenga in yellow light beneath a large number 9" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/12-gbenga-against-roller-shutter-night.webp" width="1067" height="1600" alt="Gbenga against a roller shutter at night" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/13-gbenga-sitting-glass-wall-next-reflection.webp" width="1067" height="1600" alt="Gbenga sitting by a glass wall next to his reflection" decoding="async"></article>
       </div>
 
       <!-- BByaga -->
       <div class="project" data-name="BByaga" data-meta="photos for a new clothing collection, 2025">
-        <article class="pg pg-tell" style="--tell:192px">
-          <img loading="lazy" class="shot" src="img/bbyaga/01-model-spiked-black-wig-reclining-work-table.webp" width="1600" height="1067" alt="Model in a spiked black wig reclining on a work table under a fluorescent tube" decoding="async">
-          <div class="desc">
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/01-model-spiked-black-wig-reclining-work-table.webp" width="1600" height="1067" alt="Model in a spiked black wig reclining on a work table under a fluorescent tube" decoding="async"></article>
+        <article class="pg pg-text">
+          <div class="tx">
             <p>Zola, whose creations you can see in the photos, was looking for a&nbsp;photographer who could catch a&nbsp;glimpse of queer, free joy in her parents' fabric factory.</p>
+            <p>Surrounded by fashion from a&nbsp;young age, she has always known she wanted to create something unapologetically different.</p>
+            <p>Her clothes, as weird and unusual as they are, represent the energy she has found in Berlin over the past couple of years.</p>
             <p class="ig"><a href="https://www.instagram.com/bbyaga_zola/" target="_blank" rel="noopener" aria-label="@bbyaga_zola on Instagram">@bbyaga_zola</a></p>
           </div>
         </article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/02-model-spiked-black-wig-patched-wide-leg.webp" width="1067" height="1600" alt="Model in a spiked black wig and patched wide-leg jeans among fabric rolls" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/03-model-spiked-black-wig-holding-steel-pole.webp" width="1067" height="1600" alt="Model in a spiked black wig holding a steel pole beside stacked cardboard tubes" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/04-model-spiked-black-wig-one-arm-raised.webp" width="1067" height="1600" alt="Model in a spiked black wig with one arm raised against a green wall" decoding="async"></article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/bbyaga/05-model-striped-stockings-heels-leaning-into.webp" width="1067" height="1600" alt="Model in striped stockings and heels leaning into an orange fabric cross, seen from behind" decoding="async">
-          <p class="desc">Surrounded by fashion from a&nbsp;young age, she has always known she wanted to create something unapologetically different.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/05-model-striped-stockings-heels-leaning-into.webp" width="1067" height="1600" alt="Model in striped stockings and heels leaning into an orange fabric cross, seen from behind" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/06-model-fur-hat-green-bleached-hoodie-front.webp" width="1067" height="1600" alt="Model in a fur hat and green bleached hoodie in front of shelves of thread boxes" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/07-model-pink-wig-fur-leg-warmers-standing.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers standing on a sewing table" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/08-model-pink-wig-fur-leg-warmers-beside-row.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers beside a row of lockers" decoding="async"></article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/bbyaga/09-model-stacked-caps-sitting-pile-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps sitting on a pile of fabric rolls, holding scissors" decoding="async">
-          <p class="desc">Her clothes, as weird and unusual as they are, represent the energy she has found in Berlin over the past couple of years.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/09-model-stacked-caps-sitting-pile-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps sitting on a pile of fabric rolls, holding scissors" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/10-model-stacked-caps-standing-fabric-rolls.webp" width="1067" height="1600" alt="Model in stacked caps standing on fabric rolls with arms spread" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/11-model-stacked-caps-lying-across-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps lying across fabric rolls" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/12-model-patchwork-t-shirt-gown-blonde-curly.webp" width="1067" height="1600" alt="Model in a patchwork T-shirt gown and blonde curly wig among sewing machines" decoding="async"></article>
@@ -343,23 +307,19 @@ html.lb-open,html.lb-open body{overflow:hidden}
 
       <!-- Ulia -->
       <div class="project" data-name="Ulia" data-meta="winter photoshoot, 2026">
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/ulia/01-ulia-bent-over-snow-covered-wall-green.webp" width="1280" height="1600" alt="Ulia bent over a snow-covered wall in green tights and clear platform heels" decoding="async">
-          <p class="desc">There are not that many pictures here, but they hold what we were after. A&nbsp;wild girl who needs no one and is on the hunt.</p>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ulia/01-ulia-bent-over-snow-covered-wall-green.webp" width="1280" height="1600" alt="Ulia bent over a snow-covered wall in green tights and clear platform heels" decoding="async"></article>
+        <article class="pg pg-text">
+          <div class="tx">
+            <p>There are not that many pictures here, but they hold what we were after. A&nbsp;wild girl who needs no one and is on the hunt.</p>
+            <p>On a&nbsp;frosty day in the middle of the Berlin winter we spent hours together, working out how to portray the strong woman she is.</p>
+            <p>I&nbsp;wanted to catch her lying in wait for prey, with a&nbsp;face closer to a&nbsp;wild animal than to a&nbsp;subtle, fragile girly girl.</p>
+            <p>Ulia remains one of my role models. She is one of the strongest and most creative people I&nbsp;know, and never short of a&nbsp;new idea.</p>
+          </div>
         </article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/ulia/02-ulia-crouching-snow-green-tights-reaching.webp" width="1280" height="1600" alt="Ulia crouching in the snow in green tights, reaching for her shoe" decoding="async">
-          <p class="desc">On a&nbsp;frosty day in the middle of the Berlin winter we spent hours together, working out how to portray the strong woman she is.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ulia/02-ulia-crouching-snow-green-tights-reaching.webp" width="1280" height="1600" alt="Ulia crouching in the snow in green tights, reaching for her shoe" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ulia/03-ulia-standing-fur-coat-among-snow-covered.webp" width="1600" height="1067" alt="Ulia standing in a fur coat among snow-covered bushes" decoding="async"></article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/ulia/04-ulia-crouched-low-snow-fur-coat-hair-falling.webp" width="1280" height="1600" alt="Ulia crouched low in the snow in a fur coat, her hair falling over the ground" decoding="async">
-          <p class="desc">I&nbsp;wanted to catch her lying in wait for prey, with a&nbsp;face closer to a&nbsp;wild animal than to a&nbsp;subtle, fragile girly girl.</p>
-        </article>
-        <article class="pg pg-tell">
-          <img loading="lazy" class="shot" src="img/ulia/05-ulia-lying-snow-white-tights-heels.webp" width="1280" height="1600" alt="Ulia lying in the snow in white tights and heels" decoding="async">
-          <p class="desc">Ulia remains one of my role models. She is one of the strongest and most creative people I&nbsp;know, and never short of a&nbsp;new idea.</p>
-        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ulia/04-ulia-crouched-low-snow-fur-coat-hair-falling.webp" width="1280" height="1600" alt="Ulia crouched low in the snow in a fur coat, her hair falling over the ground" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ulia/05-ulia-lying-snow-white-tights-heels.webp" width="1280" height="1600" alt="Ulia lying in the snow in white tights and heels" decoding="async"></article>
       </div>
 
     </div>
