@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>k. wiatr</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;
+  --ink:#1C1A17;
+  --mute:#5A5652;
+  --line:rgba(28,26,23,.16);
+  --margin:clamp(16px,2.6vw,44px);
+  --barh:60px;
+  --footh:48px;
+  --side:clamp(40px,7vw,150px);
+  --tight:clamp(8px,.9vw,14px);
+  --sans:"Helvetica Neue",Helvetica,Arial,"Arimo",sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --bg:#FFFFFF; --ink:#1C1A17; --mute:#5A5652; } }
+:root[data-theme="dark"]{ --bg:#FFFFFF; --ink:#1C1A17; --mute:#5A5652; }
+
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:400;font-size:14px;line-height:1.4;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+p,h1,h2,figure,dl{margin:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media (prefers-reduced-motion: reduce){ *{transition:none !important;animation:none !important} }
+
+.stage{position:fixed;inset:0;background:var(--bg);isolation:isolate}
+
+/* ---------- top bar ---------- */
+.topbar{position:absolute;top:0;left:0;right:0;height:var(--barh);z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 var(--margin);
+  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.topbar .mark{width:clamp(84px,7.5vw,116px);color:var(--ink);transition:opacity .3s var(--ease)}
+.topbar .mark svg{width:100%;height:auto;display:block}
+.stage[data-view="home"] .topbar{background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+.stage[data-view="home"] .topbar .mark{opacity:0;pointer-events:none}
+.topbar nav{display:flex;gap:clamp(18px,2.4vw,34px);font-size:15px}
+.topbar nav a{color:var(--mute);transition:color .25s var(--ease)}
+.topbar nav a[aria-current="page"]{color:var(--ink)}
+
+/* ---------- footer bar: the project you are in ---------- */
+.footbar{position:absolute;left:0;right:0;bottom:0;height:var(--footh);z-index:20;display:flex;align-items:center;justify-content:center;gap:clamp(16px,3vw,44px);
+  padding:0 var(--margin);font-size:13px;letter-spacing:.01em;text-align:center;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility 0s linear .3s}
+.fb-arrow{flex:none;width:34px;height:34px;display:flex;align-items:center;justify-content:center;padding:0;border:0;background:none;color:var(--mute);cursor:pointer;transition:color .2s var(--ease)}
+.fb-arrow:hover{color:var(--ink)}
+.fb-arrow svg{width:19px;height:19px;display:block}
+.fb-title{min-width:0}
+.footbar.on{opacity:1;visibility:visible;transition:opacity .3s var(--ease)}
+.footbar b{font-weight:400}
+.footbar span{color:var(--mute)}
+.footbar em{font-style:normal;color:var(--mute);padding:0 8px}
+
+/* ---------- views ---------- */
+.view{position:absolute;left:0;right:0;top:var(--barh);bottom:0;z-index:1;opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility 0s linear .35s}
+.view.on{opacity:1;visibility:visible;transition:opacity .35s var(--ease)}
+
+/* ---------- home ---------- */
+.v-home{display:flex;align-items:center;justify-content:center;padding:var(--margin)}
+.logo{width:min(64vw,780px);color:var(--ink);transform:translateY(-6%)}
+.logo svg{width:100%;height:auto;display:block;overflow:visible}
+.logo.play .lg-wiatr{animation:lgRise .75s .15s both cubic-bezier(.2,.7,.2,1)}
+.logo.play .lg-k{animation:lgRise .6s 1.0s both cubic-bezier(.2,.7,.2,1)}
+.logo.play .lg-doti{animation:lgFade .45s 1.75s both cubic-bezier(.2,.7,.2,1)}
+.logo.play .lg-dotk{animation:lgFade .45s 1.75s both cubic-bezier(.2,.7,.2,1), lgHop 3.4s 2.35s infinite}
+@keyframes lgRise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes lgFade{from{opacity:0}to{opacity:1}}
+@keyframes lgHop{
+  0%{transform:translateY(0);animation-timing-function:cubic-bezier(.3,0,.35,1)}
+  11%{transform:translateY(-34px);animation-timing-function:cubic-bezier(.65,0,.75,1)}
+  23%{transform:translateY(0);animation-timing-function:cubic-bezier(.3,0,.35,1)}
+  31%{transform:translateY(-13px);animation-timing-function:cubic-bezier(.65,0,.75,1)}
+  39%{transform:translateY(0);animation-timing-function:cubic-bezier(.3,0,.35,1)}
+  44%{transform:translateY(-4px);animation-timing-function:cubic-bezier(.65,0,.75,1)}
+  49%,100%{transform:translateY(0)}
+}
+
+/* ---------- works: one project at a time, arrows switch ---------- */
+.project{animation:pgFade .35s var(--ease)}
+@keyframes pgFade{from{opacity:0}to{opacity:1}}
+.scroller{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior-y:contain;scroll-snap-type:y proximity;
+  scrollbar-width:thin;scrollbar-color:var(--ink) rgba(0,0,0,.10)}
+.scroller::-webkit-scrollbar{width:9px}
+.scroller::-webkit-scrollbar-track{background:rgba(0,0,0,.10)}
+.scroller::-webkit-scrollbar-thumb{background:var(--ink)}
+
+.pg{min-height:calc(100vh - var(--barh));scroll-snap-align:start;padding:26px var(--side) calc(var(--footh) + 26px);display:grid;align-content:center;justify-items:center;row-gap:24px}
+
+/* opening page of a project: hero + short description */
+.pg-open{grid-template-rows:minmax(0,1fr) auto;align-content:stretch}
+.hero{position:relative;width:100%;max-width:min(74vw,1060px);align-self:stretch;min-height:0;display:flex;align-items:center;justify-content:center}
+.desc{max-width:64ch;font-size:15.5px;line-height:1.42}
+
+/* photographs are never cropped */
+.shot{width:auto;height:auto;max-width:min(74vw,1060px);max-height:70vh;object-fit:contain}
+.row{display:flex;align-items:flex-start;gap:var(--tight);width:100%;max-width:min(1600px, calc(70vh * var(--sum) + var(--tight) * (var(--n) - 1)))}
+.row img{flex:var(--ar) 1 0%;min-width:0;height:auto}
+
+/* the logo set: each version on white, the same on black beneath it, nothing cropped */
+.marks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto auto;grid-auto-flow:column;gap:var(--tight);width:100%;max-width:min(1600px, calc((70vh - var(--tight)) * 2.25 + var(--tight) * 2))}
+.marks img{width:100%;height:auto}
+
+/* the shoot as a contact sheet: in order, every row full width, nothing cropped */
+.gallery{width:100%;max-width:1600px;display:grid;row-gap:var(--tight)}
+.g-row{display:flex;align-items:flex-start;gap:var(--tight)}
+.g-item{flex:var(--ar) 1 0%;min-width:0;display:block;padding:0;border:0;background:none;cursor:zoom-in}
+.g-item img{width:100%;height:auto}
+
+/* photo projects open on one photograph with the words beside it, nothing cropped */
+.desc{text-wrap:pretty}
+.desc p + p{margin-top:.6em}
+.desc .ig{margin-top:1.1em}
+.desc .ig a{color:var(--mute);transition:color .25s var(--ease)}
+.desc .ig a:hover{color:var(--ink)}
+.pg-tell .shot{max-height:calc(100vh - var(--barh) - var(--footh) - var(--tell,170px))}
+.pg-tell .desc{max-width:48ch}
+
+/* one photograph at a time, click anywhere to close */
+.lb{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:var(--footh) var(--side);background:var(--bg);cursor:zoom-out;touch-action:none;
+  opacity:0;visibility:hidden;transition:opacity .3s var(--ease),visibility 0s linear .3s}
+.lb.on{opacity:1;visibility:visible;transition:opacity .3s var(--ease)}
+.lb-img{position:relative;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 2 * var(--footh));max-height:calc(100svh - 2 * var(--footh))}
+.lb-bar{position:absolute;left:0;right:0;bottom:0;height:var(--footh);display:flex;align-items:center;justify-content:center;gap:clamp(28px,4vw,56px)}
+html.lb-open,html.lb-open body{overflow:hidden}
+.lb:focus{outline:none}
+
+/* text pages */
+.tx{width:100%;max-width:64ch}
+.lede{font-size:clamp(21px,1.7vw,30px);line-height:1.2;letter-spacing:-.012em}
+.body{font-size:15px;line-height:1.45;margin-top:20px}
+
+.body p + p{margin-top:.5em}
+
+/* heroes */
+.coinwrap{position:absolute;inset:4% 6%}
+.coinwrap canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.coinwrap canvas.drag{cursor:grabbing}
+/* ---------- about ---------- */
+.v-about{display:flex;align-items:center;justify-content:center;padding:26px var(--side) 34px}
+.me{display:flex;align-items:center;justify-content:center;gap:clamp(26px,3.6vw,64px);width:100%}
+.me .portrait{flex:none;width:auto;height:auto;max-width:min(36vw,440px);max-height:calc(100vh - var(--barh) - 60px)}
+.me .tx{flex:0 1 52ch;min-width:0}
+
+/* ---------- contact ---------- */
+.v-contact{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:var(--margin)}
+.v-contact .mail{font-size:clamp(28px,5vw,80px);line-height:1;letter-spacing:-.025em;word-break:break-all}
+.v-contact .links{display:flex;gap:26px;margin-top:28px;font-size:15px}
+.v-contact .where{margin-top:30px;font-size:14px;color:var(--mute)}
+
+/* ---------- mobile ---------- */
+@media (max-width:820px){
+  :root{--barh:52px;--footh:44px;--side:var(--margin)}
+  html,body{height:auto;overflow:visible}
+  body{padding-top:var(--barh)}
+  .stage{position:static;min-height:100%}
+  .topbar{position:fixed}
+  .topbar nav{font-size:14px;gap:20px}
+  .footbar{position:fixed}
+  .view{position:static;opacity:1;visibility:visible;transition:none;scroll-margin-top:var(--barh)}
+  .view:not(.on){display:none}
+  .v-works{padding-bottom:var(--footh)}
+
+  .v-home{min-height:calc(100svh - var(--barh));padding:var(--margin)}
+  .logo{width:76vw;max-width:480px;transform:none}
+
+  .scroller{position:static;overflow:visible;scroll-snap-type:none}
+  .pg{min-height:0;display:block;scroll-snap-align:none;padding:18px var(--margin) 46px}
+  .pg > *{margin-left:auto;margin-right:auto}
+  .pg-open .hero{height:auto;aspect-ratio:3/4;max-width:none}
+  .desc{max-width:none;font-size:15px;margin-top:16px}
+  .shot{max-width:100%;max-height:none}
+  .row{flex-direction:column;max-width:none}
+  .row img{flex:none;width:100%}
+  .pg-tell .shot{max-height:none}
+  .pg-tell .desc{max-width:none}
+  .marks{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-flow:row;max-width:none}
+  .tx{max-width:none}
+  .lede{font-size:21px;max-width:none}
+  .body{font-size:15px;max-width:none;margin-top:14px}
+
+  .v-about{display:block;padding:18px var(--margin) 46px}
+  .me{display:block}
+  .me .portrait{width:100%;max-width:none;max-height:none}
+  .me .tx{margin-top:20px}
+  .v-contact{min-height:calc(100svh - var(--barh));padding:var(--margin)}
+  .v-contact .mail{font-size:28px}
+}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
+</style>
+</head>
+<body>
+<main class="stage" data-view="home">
+
+  <header class="topbar">
+    <a class="mark" href="#home" aria-label="Home"><svg viewBox="0 0 1008 231" fill="currentColor" fill-rule="evenodd" aria-label="k. wiatr"><path d="M279.7 75.3L281.6 73.7L284.0 72.9L323.8 72.8L326.2 73.3L328.3 74.6L329.4 75.9L330.2 78.2L341.0 141.7L341.8 143.3L343.5 145.1L345.0 145.9L347.5 146.3L349.2 146.0L351.4 144.8L352.6 143.6L353.3 142.1L367.7 77.9L368.3 76.3L369.4 74.8L371.5 73.3L374.1 72.8L420.6 72.8L423.1 73.3L424.6 74.2L425.8 75.5L426.9 77.9L442.0 142.7L443.3 144.9L444.6 146.0L446.1 146.7L447.8 146.9L449.5 146.8L451.8 145.7L453.5 143.9L454.2 142.3L465.0 78.3L465.4 76.7L466.3 75.3L468.2 73.7L469.7 73.0L471.4 72.8L507.4 72.8L509.8 73.3L511.3 74.1L513.0 76.0L513.6 77.6L513.9 79.3L513.7 80.9L478.2 219.9L477.1 222.2L475.2 223.9L473.6 224.6L471.9 224.8L422.5 224.8L420.8 224.6L418.5 223.4L417.3 222.2L416.2 219.8L402.2 159.0L401.4 157.5L400.2 156.2L398.7 155.3L396.1 154.8L394.4 155.0L392.8 155.7L390.9 157.4L390.1 158.9L375.5 219.8L374.4 222.2L373.2 223.4L371.7 224.3L369.1 224.8L320.0 224.8L317.5 224.3L316.0 223.5L314.3 221.5L313.7 219.9L278.5 80.9L278.4 78.4L278.8 76.8L279.7 75.3ZM528.7 220.8L528.2 218.3L528.2 79.3L528.4 77.6L529.1 76.1L530.1 74.7L532.2 73.3L533.8 72.9L574.8 72.8L576.5 73.0L578.0 73.7L580.0 75.4L581.1 77.6L581.3 79.3L581.3 218.3L581.1 220.0L580.0 222.3L578.8 223.5L577.3 224.3L575.6 224.8L534.7 224.8L532.2 224.3L530.1 222.9L528.7 220.8ZM679.8 72.5L685.1 74.1L688.7 75.5L692.2 77.2L695.4 79.1L699.9 82.3L701.5 83.0L703.2 83.2L705.7 82.8L707.8 81.4L708.8 80.0L710.2 76.4L711.2 74.9L713.3 73.4L715.1 72.9L757.2 72.9L759.6 73.7L760.9 74.7L762.0 76.1L762.6 77.6L762.8 79.3L762.8 218.3L762.6 220.0L762.0 221.6L760.9 222.9L759.6 224.0L758.0 224.6L756.3 224.8L715.1 224.8L713.4 224.3L711.2 222.7L710.2 221.3L708.8 217.6L707.8 216.3L705.7 214.9L703.2 214.4L701.5 214.6L700.0 215.3L693.7 219.5L688.7 222.1L685.0 223.6L679.4 225.2L671.6 226.4L665.1 226.7L659.8 226.5L652.6 225.5L645.5 223.7L640.7 221.8L634.3 218.6L629.9 215.8L624.3 211.2L620.5 207.5L615.8 201.7L612.7 197.1L610.0 192.4L607.6 187.3L605.5 182.0L603.8 176.7L601.8 167.7L601.0 161.6L600.4 155.4L600.3 148.8L600.4 142.2L601.4 132.5L602.4 126.7L603.8 121.0L605.5 115.4L607.6 110.2L611.4 102.5L614.3 98.0L617.3 93.8L620.5 90.1L624.1 86.6L627.9 83.4L632.0 80.5L636.3 78.0L640.7 75.8L647.8 73.3L652.6 72.1L657.3 71.4L662.3 71.0L667.2 71.0L671.7 71.2L675.8 71.7L679.8 72.5ZM669.5 120.1L666.9 121.6L664.4 123.5L662.1 125.7L660.4 127.8L657.8 132.0L655.8 137.4L655.1 140.9L654.6 144.4L654.5 150.9L655.1 156.8L655.8 159.9L656.9 163.2L659.5 168.2L661.1 170.4L663.3 172.8L667.4 176.2L669.5 177.5L672.3 178.7L677.5 180.0L680.2 180.3L683.5 180.4L686.6 180.0L689.7 179.4L694.5 177.5L697.1 175.9L699.6 174.0L701.9 171.8L703.7 169.7L706.3 165.4L708.3 160.0L709.1 156.4L709.5 153.0L709.7 146.4L709.0 140.6L708.3 137.5L707.2 134.3L705.0 129.8L703.7 127.9L701.5 125.5L699.6 123.6L697.1 121.7L694.5 120.1L691.7 118.9L686.6 117.6L683.5 117.3L680.7 117.3L677.4 117.6L674.4 118.2L669.5 120.1ZM781.1 113.7L780.2 111.3L780.2 78.5L780.7 76.8L781.5 75.4L783.4 73.7L785.8 72.9L792.2 72.8L794.1 72.6L796.3 71.5L798.0 69.6L798.6 68.0L798.9 66.1L798.9 41.6L799.4 40.0L800.2 38.5L801.4 37.3L802.9 36.5L805.4 36.0L845.8 36.0L848.2 36.5L849.7 37.3L851.4 39.2L852.2 41.6L852.3 66.1L852.5 68.0L853.6 70.3L855.5 71.9L857.9 72.8L873.4 72.8L875.1 73.0L876.6 73.7L878.0 74.7L879.0 76.1L879.8 78.5L879.9 110.5L879.7 112.2L879.0 113.7L877.4 115.6L875.9 116.5L874.2 116.9L859.0 117.0L856.3 117.5L854.8 118.3L853.1 120.2L852.5 121.8L852.3 123.7L852.3 168.6L852.6 171.7L853.3 174.2L854.2 175.8L855.3 177.1L856.8 178.1L859.2 179.0L863.6 179.6L873.7 179.6L876.2 180.1L878.3 181.5L879.3 182.8L879.9 184.4L880.2 186.1L880.2 218.3L879.9 220.0L879.3 221.6L877.6 223.5L876.2 224.3L873.7 224.8L857.0 224.8L848.8 224.5L842.0 223.7L835.2 222.3L828.3 220.0L822.6 217.2L817.6 213.9L813.8 210.7L809.9 206.3L806.5 201.3L803.8 195.7L801.7 189.5L800.0 182.1L799.2 174.8L798.9 167.2L798.9 123.7L798.6 121.8L798.0 120.2L797.0 118.9L794.9 117.5L792.2 117.0L786.7 117.0L784.2 116.5L782.1 115.1L781.1 113.7ZM902.3 220.8L901.8 218.3L901.8 79.3L902.1 77.6L902.7 76.1L903.8 74.7L905.1 73.7L906.7 73.0L908.4 72.8L948.5 72.8L950.1 73.0L951.7 73.7L953.1 74.7L954.5 76.8L954.9 78.5L955.0 83.1L955.4 84.7L956.3 86.2L957.4 87.4L958.9 88.2L961.3 88.8L962.9 88.6L964.5 88.0L969.7 83.8L974.7 80.2L980.2 77.1L984.2 75.3L990.0 73.3L995.9 72.1L998.3 72.0L1000.7 72.8L1002.1 73.8L1003.1 75.2L1003.8 76.7L1004.0 78.4L1004.0 121.6L1003.8 123.3L1003.1 124.8L1001.5 126.8L1000.0 127.6L998.3 128.0L986.5 128.1L980.1 128.6L973.8 129.9L968.6 131.7L964.3 134.1L962.5 135.6L960.9 137.3L959.5 139.2L958.3 141.3L956.6 145.6L955.6 149.9L955.0 156.3L955.0 218.3L954.7 220.0L954.1 221.6L952.4 223.5L950.9 224.3L949.3 224.8L908.4 224.8L905.9 224.3L903.8 222.9L902.3 220.8ZM4.5 220.8L4.0 218.3L4.0 30.8L4.5 28.3L5.9 26.2L8.0 24.8L10.5 24.3L50.6 24.3L52.3 24.5L53.9 25.2L55.2 26.2L56.2 27.6L56.9 29.1L57.1 30.8L57.1 111.7L57.4 113.6L58.0 115.2L59.7 117.1L61.2 118.0L62.9 118.4L65.5 118.1L67.0 117.4L68.4 116.3L97.2 75.6L98.4 74.3L99.9 73.4L102.5 72.8L149.4 72.8L151.9 73.3L154.0 74.7L155.1 76.1L155.9 78.5L155.9 80.2L155.0 82.6L106.2 145.0L105.2 146.7L104.7 149.2L105.3 151.8L106.3 153.4L155.8 214.9L156.7 217.4L156.7 219.1L156.3 220.7L154.9 222.9L152.8 224.3L150.3 224.8L102.6 224.8L99.9 224.3L98.4 223.3L97.2 222.0L69.1 180.3L67.1 178.4L65.6 177.6L63.9 177.3L61.3 177.7L59.1 179.1L57.6 181.3L57.2 182.9L57.1 218.3L56.6 220.8L55.2 222.9L53.1 224.3L50.6 224.8L10.5 224.8L8.0 224.3L5.9 222.9L4.5 220.8ZM526.1 20.5L527.5 17.8L529.0 15.6L532.5 11.7L534.8 9.9L537.6 8.1L542.5 5.9L545.8 5.0L549.1 4.4L554.9 4.0L560.8 4.4L564.0 5.0L567.3 5.9L572.2 8.1L575.0 9.9L577.2 11.7L580.7 15.6L582.3 17.8L583.7 20.5L585.2 25.3L585.7 28.5L585.9 31.5L585.7 34.7L585.2 37.8L583.7 42.5L582.3 45.2L580.8 47.4L577.2 51.1L575.0 52.9L572.2 54.7L567.3 56.9L564.1 57.8L560.8 58.4L555.1 58.7L549.1 58.4L545.8 57.8L542.5 56.9L537.6 54.7L534.8 52.9L532.5 51.1L529.0 47.4L527.5 45.2L526.1 42.5L524.5 37.8L524.0 34.7L523.9 31.8L524.0 28.5L524.5 25.3L526.1 20.5ZM177.9 186.6L179.3 183.9L180.8 181.7L184.4 177.8L186.6 176.0L189.4 174.2L194.3 172.0L197.7 171.1L200.9 170.5L206.7 170.1L212.7 170.5L215.9 171.1L219.2 172.0L224.1 174.2L226.8 176.0L229.1 177.8L232.6 181.7L234.1 183.9L235.5 186.6L237.1 191.4L237.6 194.6L237.7 197.6L237.6 200.8L237.1 203.9L235.5 208.6L234.1 211.3L232.6 213.5L229.1 217.2L226.8 219.0L224.1 220.8L219.2 223.0L215.9 223.9L212.7 224.5L207.0 224.8L200.9 224.5L197.7 223.9L194.3 223.0L189.4 220.8L186.6 219.0L184.4 217.2L180.8 213.5L179.3 211.3L177.9 208.6L176.3 203.9L175.9 200.8L175.7 197.9L175.9 194.6L176.4 191.4L177.9 186.6Z"/></svg></a>
+    <nav aria-label="Main">
+      <a href="#works" data-view="works">works</a>
+      <a href="#about" data-view="about">about</a>
+      <a href="#contact" data-view="contact">contact</a>
+    </nav>
+  </header>
+
+  <section class="view v-home on" id="home" aria-label="Home">
+    <div class="logo"><svg viewBox="0 0 1008 231" fill="currentColor" fill-rule="evenodd" role="img" aria-label="k. wiatr"><g class="lg-wiatr"><path d="M279.7 75.3L281.6 73.7L284.0 72.9L323.8 72.8L326.2 73.3L328.3 74.6L329.4 75.9L330.2 78.2L341.0 141.7L341.8 143.3L343.5 145.1L345.0 145.9L347.5 146.3L349.2 146.0L351.4 144.8L352.6 143.6L353.3 142.1L367.7 77.9L368.3 76.3L369.4 74.8L371.5 73.3L374.1 72.8L420.6 72.8L423.1 73.3L424.6 74.2L425.8 75.5L426.9 77.9L442.0 142.7L443.3 144.9L444.6 146.0L446.1 146.7L447.8 146.9L449.5 146.8L451.8 145.7L453.5 143.9L454.2 142.3L465.0 78.3L465.4 76.7L466.3 75.3L468.2 73.7L469.7 73.0L471.4 72.8L507.4 72.8L509.8 73.3L511.3 74.1L513.0 76.0L513.6 77.6L513.9 79.3L513.7 80.9L478.2 219.9L477.1 222.2L475.2 223.9L473.6 224.6L471.9 224.8L422.5 224.8L420.8 224.6L418.5 223.4L417.3 222.2L416.2 219.8L402.2 159.0L401.4 157.5L400.2 156.2L398.7 155.3L396.1 154.8L394.4 155.0L392.8 155.7L390.9 157.4L390.1 158.9L375.5 219.8L374.4 222.2L373.2 223.4L371.7 224.3L369.1 224.8L320.0 224.8L317.5 224.3L316.0 223.5L314.3 221.5L313.7 219.9L278.5 80.9L278.4 78.4L278.8 76.8L279.7 75.3ZM528.7 220.8L528.2 218.3L528.2 79.3L528.4 77.6L529.1 76.1L530.1 74.7L532.2 73.3L533.8 72.9L574.8 72.8L576.5 73.0L578.0 73.7L580.0 75.4L581.1 77.6L581.3 79.3L581.3 218.3L581.1 220.0L580.0 222.3L578.8 223.5L577.3 224.3L575.6 224.8L534.7 224.8L532.2 224.3L530.1 222.9L528.7 220.8ZM679.8 72.5L685.1 74.1L688.7 75.5L692.2 77.2L695.4 79.1L699.9 82.3L701.5 83.0L703.2 83.2L705.7 82.8L707.8 81.4L708.8 80.0L710.2 76.4L711.2 74.9L713.3 73.4L715.1 72.9L757.2 72.9L759.6 73.7L760.9 74.7L762.0 76.1L762.6 77.6L762.8 79.3L762.8 218.3L762.6 220.0L762.0 221.6L760.9 222.9L759.6 224.0L758.0 224.6L756.3 224.8L715.1 224.8L713.4 224.3L711.2 222.7L710.2 221.3L708.8 217.6L707.8 216.3L705.7 214.9L703.2 214.4L701.5 214.6L700.0 215.3L693.7 219.5L688.7 222.1L685.0 223.6L679.4 225.2L671.6 226.4L665.1 226.7L659.8 226.5L652.6 225.5L645.5 223.7L640.7 221.8L634.3 218.6L629.9 215.8L624.3 211.2L620.5 207.5L615.8 201.7L612.7 197.1L610.0 192.4L607.6 187.3L605.5 182.0L603.8 176.7L601.8 167.7L601.0 161.6L600.4 155.4L600.3 148.8L600.4 142.2L601.4 132.5L602.4 126.7L603.8 121.0L605.5 115.4L607.6 110.2L611.4 102.5L614.3 98.0L617.3 93.8L620.5 90.1L624.1 86.6L627.9 83.4L632.0 80.5L636.3 78.0L640.7 75.8L647.8 73.3L652.6 72.1L657.3 71.4L662.3 71.0L667.2 71.0L671.7 71.2L675.8 71.7L679.8 72.5ZM669.5 120.1L666.9 121.6L664.4 123.5L662.1 125.7L660.4 127.8L657.8 132.0L655.8 137.4L655.1 140.9L654.6 144.4L654.5 150.9L655.1 156.8L655.8 159.9L656.9 163.2L659.5 168.2L661.1 170.4L663.3 172.8L667.4 176.2L669.5 177.5L672.3 178.7L677.5 180.0L680.2 180.3L683.5 180.4L686.6 180.0L689.7 179.4L694.5 177.5L697.1 175.9L699.6 174.0L701.9 171.8L703.7 169.7L706.3 165.4L708.3 160.0L709.1 156.4L709.5 153.0L709.7 146.4L709.0 140.6L708.3 137.5L707.2 134.3L705.0 129.8L703.7 127.9L701.5 125.5L699.6 123.6L697.1 121.7L694.5 120.1L691.7 118.9L686.6 117.6L683.5 117.3L680.7 117.3L677.4 117.6L674.4 118.2L669.5 120.1ZM781.1 113.7L780.2 111.3L780.2 78.5L780.7 76.8L781.5 75.4L783.4 73.7L785.8 72.9L792.2 72.8L794.1 72.6L796.3 71.5L798.0 69.6L798.6 68.0L798.9 66.1L798.9 41.6L799.4 40.0L800.2 38.5L801.4 37.3L802.9 36.5L805.4 36.0L845.8 36.0L848.2 36.5L849.7 37.3L851.4 39.2L852.2 41.6L852.3 66.1L852.5 68.0L853.6 70.3L855.5 71.9L857.9 72.8L873.4 72.8L875.1 73.0L876.6 73.7L878.0 74.7L879.0 76.1L879.8 78.5L879.9 110.5L879.7 112.2L879.0 113.7L877.4 115.6L875.9 116.5L874.2 116.9L859.0 117.0L856.3 117.5L854.8 118.3L853.1 120.2L852.5 121.8L852.3 123.7L852.3 168.6L852.6 171.7L853.3 174.2L854.2 175.8L855.3 177.1L856.8 178.1L859.2 179.0L863.6 179.6L873.7 179.6L876.2 180.1L878.3 181.5L879.3 182.8L879.9 184.4L880.2 186.1L880.2 218.3L879.9 220.0L879.3 221.6L877.6 223.5L876.2 224.3L873.7 224.8L857.0 224.8L848.8 224.5L842.0 223.7L835.2 222.3L828.3 220.0L822.6 217.2L817.6 213.9L813.8 210.7L809.9 206.3L806.5 201.3L803.8 195.7L801.7 189.5L800.0 182.1L799.2 174.8L798.9 167.2L798.9 123.7L798.6 121.8L798.0 120.2L797.0 118.9L794.9 117.5L792.2 117.0L786.7 117.0L784.2 116.5L782.1 115.1L781.1 113.7ZM902.3 220.8L901.8 218.3L901.8 79.3L902.1 77.6L902.7 76.1L903.8 74.7L905.1 73.7L906.7 73.0L908.4 72.8L948.5 72.8L950.1 73.0L951.7 73.7L953.1 74.7L954.5 76.8L954.9 78.5L955.0 83.1L955.4 84.7L956.3 86.2L957.4 87.4L958.9 88.2L961.3 88.8L962.9 88.6L964.5 88.0L969.7 83.8L974.7 80.2L980.2 77.1L984.2 75.3L990.0 73.3L995.9 72.1L998.3 72.0L1000.7 72.8L1002.1 73.8L1003.1 75.2L1003.8 76.7L1004.0 78.4L1004.0 121.6L1003.8 123.3L1003.1 124.8L1001.5 126.8L1000.0 127.6L998.3 128.0L986.5 128.1L980.1 128.6L973.8 129.9L968.6 131.7L964.3 134.1L962.5 135.6L960.9 137.3L959.5 139.2L958.3 141.3L956.6 145.6L955.6 149.9L955.0 156.3L955.0 218.3L954.7 220.0L954.1 221.6L952.4 223.5L950.9 224.3L949.3 224.8L908.4 224.8L905.9 224.3L903.8 222.9L902.3 220.8Z"/></g><g class="lg-k"><path d="M4.5 220.8L4.0 218.3L4.0 30.8L4.5 28.3L5.9 26.2L8.0 24.8L10.5 24.3L50.6 24.3L52.3 24.5L53.9 25.2L55.2 26.2L56.2 27.6L56.9 29.1L57.1 30.8L57.1 111.7L57.4 113.6L58.0 115.2L59.7 117.1L61.2 118.0L62.9 118.4L65.5 118.1L67.0 117.4L68.4 116.3L97.2 75.6L98.4 74.3L99.9 73.4L102.5 72.8L149.4 72.8L151.9 73.3L154.0 74.7L155.1 76.1L155.9 78.5L155.9 80.2L155.0 82.6L106.2 145.0L105.2 146.7L104.7 149.2L105.3 151.8L106.3 153.4L155.8 214.9L156.7 217.4L156.7 219.1L156.3 220.7L154.9 222.9L152.8 224.3L150.3 224.8L102.6 224.8L99.9 224.3L98.4 223.3L97.2 222.0L69.1 180.3L67.1 178.4L65.6 177.6L63.9 177.3L61.3 177.7L59.1 179.1L57.6 181.3L57.2 182.9L57.1 218.3L56.6 220.8L55.2 222.9L53.1 224.3L50.6 224.8L10.5 224.8L8.0 224.3L5.9 222.9L4.5 220.8Z"/></g><g class="lg-doti"><path d="M526.1 20.5L527.5 17.8L529.0 15.6L532.5 11.7L534.8 9.9L537.6 8.1L542.5 5.9L545.8 5.0L549.1 4.4L554.9 4.0L560.8 4.4L564.0 5.0L567.3 5.9L572.2 8.1L575.0 9.9L577.2 11.7L580.7 15.6L582.3 17.8L583.7 20.5L585.2 25.3L585.7 28.5L585.9 31.5L585.7 34.7L585.2 37.8L583.7 42.5L582.3 45.2L580.8 47.4L577.2 51.1L575.0 52.9L572.2 54.7L567.3 56.9L564.1 57.8L560.8 58.4L555.1 58.7L549.1 58.4L545.8 57.8L542.5 56.9L537.6 54.7L534.8 52.9L532.5 51.1L529.0 47.4L527.5 45.2L526.1 42.5L524.5 37.8L524.0 34.7L523.9 31.8L524.0 28.5L524.5 25.3L526.1 20.5Z"/></g><g class="lg-dotk"><path d="M177.9 186.6L179.3 183.9L180.8 181.7L184.4 177.8L186.6 176.0L189.4 174.2L194.3 172.0L197.7 171.1L200.9 170.5L206.7 170.1L212.7 170.5L215.9 171.1L219.2 172.0L224.1 174.2L226.8 176.0L229.1 177.8L232.6 181.7L234.1 183.9L235.5 186.6L237.1 191.4L237.6 194.6L237.7 197.6L237.6 200.8L237.1 203.9L235.5 208.6L234.1 211.3L232.6 213.5L229.1 217.2L226.8 219.0L224.1 220.8L219.2 223.0L215.9 223.9L212.7 224.5L207.0 224.8L200.9 224.5L197.7 223.9L194.3 223.0L189.4 220.8L186.6 219.0L184.4 217.2L180.8 213.5L179.3 211.3L177.9 208.6L176.3 203.9L175.9 200.8L175.7 197.9L175.9 194.6L176.4 191.4L177.9 186.6Z"/></g></svg></div>
+  </section>
+
+  <section class="view v-works" id="works" aria-label="Works">
+    <div class="scroller" tabindex="-1">
+
+      <!-- Ballanheim -->
+      <div class="project" data-name="Ballanheim" data-meta="brand identity, photography and web, 2026">
+        <article class="pg pg-open">
+          <div class="hero"><div class="coinwrap"><canvas id="coin"></canvas></div></div>
+          <p class="desc">Ballanheim is a queer upcycling label from Berlin, run by Andrew, who turns discarded clothes into one-off pieces. I photographed the first campaign, built the identity around a single struck seal and wrote the website, so everything the label puts out is its own.</p>
+        </article>
+        <article class="pg pg-tell" style="--tell:196px">
+          <img decoding="async" class="shot" src="img/ballanheim/01-ballanheim-campaign-banner-black-timber.webp" width="2000" height="1333" alt="Ballanheim campaign banner on a black timber hoarding">
+          <p class="desc">I met Andrew when he was working a shift at the local Humana in one of his own outfits. The shop is also where a lot of his inspiration comes from, the locals who build a whole look out of worn second-hand pieces.</p>
+        </article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/02-ballanheim-campaign-billboard-under-concrete.webp" width="2000" height="1333" alt="Ballanheim campaign billboard under a concrete canopy"></article>
+        <article class="pg pg-tell" style="--tell:174px">
+          <img decoding="async" loading="lazy" class="shot" src="img/ballanheim/03-ballanheim-campaign-poster-framed-weathered.webp" width="2000" height="1334" alt="Ballanheim campaign poster framed on a weathered wall">
+          <p class="desc">It took me about a minute to see that the style was not the only thing that was his, the vision was too. Everything he makes is built from recycled material.</p>
+        </article>
+        <article class="pg">
+          <div class="row" style="--sum:4.5000;--n:3">
+            <img decoding="async" loading="lazy" style="--ar:1.5000" src="img/ballanheim/04-ballanheim-business-cards-embossed-white.webp" width="1344" height="896" alt="Ballanheim business cards embossed on white and black stock">
+            <img decoding="async" loading="lazy" style="--ar:1.5000" src="img/ballanheim/05-ballanheim-invitation-cards-white-black.webp" width="1344" height="896" alt="Ballanheim invitation cards in white and black">
+            <img decoding="async" loading="lazy" style="--ar:1.5000" src="img/ballanheim/06-blind-embossed-ballanheim-cards-concrete.webp" width="1344" height="896" alt="Blind-embossed Ballanheim cards on concrete">
+          </div>
+        </article>
+        <article class="pg">
+          <div class="row" style="--sum:2.6667;--n:2">
+            <img decoding="async" loading="lazy" style="--ar:1.3333" src="img/ballanheim/07-ballanheim-seal-woven-into-garment-label.webp" width="1400" height="1050" alt="Ballanheim seal woven into a garment label">
+            <img decoding="async" loading="lazy" style="--ar:1.3333" src="img/ballanheim/08-ballanheim-seal-woven-label-straight.webp" width="1400" height="1050" alt="Ballanheim seal on a woven label, straight on">
+          </div>
+        </article>
+        <article class="pg pg-tell" style="--tell:196px">
+          <img decoding="async" loading="lazy" class="shot" src="img/ballanheim/09-ballanheim-website-laptop.webp" width="2000" height="1333" alt="Ballanheim website on a laptop">
+          <p class="desc">When I interviewed him for the website, I learned that his goal is to make something deeply connected to his Scottish heritage and at the same time something rioting against the old scheme of things, which might be quite a common statement in Berlin nowadays.</p>
+        </article>
+        <article class="pg">
+          <div class="marks">
+            <img decoding="async" loading="lazy" src="img/ballanheim/10-ballanheim-horizontal-logo-black-white.webp" width="1344" height="896" alt="Ballanheim horizontal logo, black on white">
+            <img decoding="async" loading="lazy" src="img/ballanheim/11-ballanheim-horizontal-logo-white-black.webp" width="1344" height="896" alt="Ballanheim horizontal logo, white on black">
+            <img decoding="async" loading="lazy" src="img/ballanheim/12-ballanheim-wordmark-black-white.webp" width="1344" height="896" alt="Ballanheim wordmark, black on white">
+            <img decoding="async" loading="lazy" src="img/ballanheim/13-ballanheim-wordmark-white-black.webp" width="1344" height="896" alt="Ballanheim wordmark, white on black">
+            <img decoding="async" loading="lazy" src="img/ballanheim/14-ballanheim-seal-black-white.webp" width="1344" height="896" alt="Ballanheim seal, black on white">
+            <img decoding="async" loading="lazy" src="img/ballanheim/15-ballanheim-seal-white-black.webp" width="1344" height="896" alt="Ballanheim seal, white on black">
+          </div>
+        </article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/ballanheim/16-helvetica-neue-specimen-ballanheim-identity.webp" width="1456" height="840" alt="Helvetica Neue specimen from the Ballanheim identity"></article>
+        <article class="pg pg-tell" style="--tell:196px">
+          <img loading="lazy" class="shot" src="img/ballanheim/17-model-holding-weighted-pole-bare-concrete.webp" width="1600" height="1067" alt="Model holding a weighted pole in a bare concrete room" decoding="async">
+          <p class="desc">Clothes, in his opinion, should have no gender, should be as comfortable as it gets and should work on the street as well as on the dancefloor, carrying fresh energy and rediscovered traditional patterns from his home country.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/18-model-carrying-weighted-bar-across-shoulders.webp" width="1600" height="1067" alt="Model carrying the weighted bar across the shoulders" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/19-model-concrete-block-over-one-shoulder.webp" width="1067" height="1600" alt="Model with a concrete block over one shoulder" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/20-model-leaning-peeling-wall-beside-factory.webp" width="1067" height="1600" alt="Model leaning on a peeling wall beside a factory window" decoding="async"></article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/ballanheim/21-model-tartan-jacket-tiara-crouching-against.webp" width="1600" height="1067" alt="Model in a tartan jacket and tiara crouching against tiles" decoding="async">
+          <p class="desc">For the campaign he only wanted daylight, and a flash once it got too dark, to keep it raw.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/22-two-models-blue-tiled-room-one-red-dress.webp" width="1067" height="1600" alt="Two models in a blue-tiled room, one in a red dress" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/23-two-models-laughing-blue-tiled-room.webp" width="1600" height="1067" alt="Two models laughing in the blue-tiled room" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/24-model-red-dress-rusted-railing-platform.webp" width="1067" height="1600" alt="Model in a red dress on a rusted railing platform" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/25-two-models-large-industrial-window.webp" width="1600" height="1067" alt="Two models by a large industrial window" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/26-two-models-phones-car-park.webp" width="1067" height="1600" alt="Two models on their phones in a car park" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/27-model-leaning-car-smashed-windscreen.webp" width="1067" height="1600" alt="Model leaning on a car with a smashed windscreen" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/28-model-leaning-against-white-caravan.webp" width="1067" height="1600" alt="Model leaning against a white caravan" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/29-model-cut-off-denim-vest-graffiti-wall.webp" width="1067" height="1600" alt="Model in a cut-off denim vest by a graffiti wall" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/30-model-tartan-kilt-sitting-stairwell.webp" width="1200" height="1600" alt="Model in a tartan kilt sitting on a stairwell" decoding="async"></article>
+      </div>
+
+      <!-- Gbenga -->
+      <div class="project" data-name="Press photos for Gbenga" data-meta="photography and styling, 2024">
+        <article class="pg pg-tell" style="--tell:192px">
+          <img loading="lazy" class="shot" src="img/gbenga/01-gbenga-white-tank-top-street-front-large.webp" width="1067" height="1600" alt="Gbenga in a white tank top on a street in front of a large housing block" decoding="async">
+          <div class="desc">
+            <p>Gbenga is not only a very close friend I met two years ago, but also an extremely skilled up-and-coming DJ.</p>
+            <p class="ig"><a href="https://www.instagram.com/gbeng.a/" target="_blank" rel="noopener" aria-label="@gbeng.a on Instagram">@gbeng.a</a></p>
+          </div>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/02-gbenga-leaning-white-wall-hands-behind-head.webp" width="1600" height="1067" alt="Gbenga leaning on a white wall with his hands behind his head" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/03-gbenga-arms-crossed-tall-grass-front.webp" width="1600" height="1067" alt="Gbenga with arms crossed in tall grass in front of a building" decoding="async"></article>
+        <article class="pg pg-tell" style="--tell:174px">
+          <img loading="lazy" class="shot" src="img/gbenga/04-gbenga-arms-crossed-grass-looking-side.webp" width="1600" height="1067" alt="Gbenga with arms crossed in the grass, looking to the side" decoding="async">
+          <p class="desc">He has played across the globe, from Basement in NYC to numerous clubs and venues in Berlin such as OXI and Kwia. Currently based in Chicago, he is working on his own EP, coming out very soon.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/05-gbenga-seen-below-against-rows-windows.webp" width="1067" height="1600" alt="Gbenga seen from below against rows of windows" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/06-gbenga-behind-stretching-arms-above-head.webp" width="1067" height="1600" alt="Gbenga from behind, stretching his arms above his head" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/07-gbenga-sitting-long-grass-silver-trainers.webp" width="1067" height="1600" alt="Gbenga sitting in long grass in silver trainers" decoding="async"></article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/gbenga/08-gbenga-lying-pavement-beside-concrete-wall.webp" width="1600" height="1067" alt="Gbenga lying on the pavement beside a concrete wall" decoding="async">
+          <p class="desc">Some of these pictures ended up as his press photos. I was also in charge of the styling.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/09-gbenga-hanging-scaffolding-outside-red.webp" width="1067" height="1600" alt="Gbenga hanging from scaffolding outside a red building" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/10-gbenga-silhouette-against-red-white-road.webp" width="1067" height="1600" alt="Gbenga in silhouette against a red and white road barrier at dusk" decoding="async"></article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/gbenga/11-gbenga-yellow-light-beneath-large-number-9.webp" width="1067" height="1600" alt="Gbenga in yellow light beneath a large number 9" decoding="async">
+          <p class="desc">My goal was to capture that eternal summer we met in, when everything seemed possible for a young aspiring artist.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/12-gbenga-against-roller-shutter-night.webp" width="1067" height="1600" alt="Gbenga against a roller shutter at night" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/13-gbenga-sitting-glass-wall-next-reflection.webp" width="1067" height="1600" alt="Gbenga sitting by a glass wall next to his reflection" decoding="async"></article>
+      </div>
+
+      <!-- BByaga -->
+      <div class="project" data-name="BByaga" data-meta="photos for a new clothing collection, 2025">
+        <article class="pg pg-tell" style="--tell:192px">
+          <img loading="lazy" class="shot" src="img/bbyaga/01-model-spiked-black-wig-reclining-work-table.webp" width="1600" height="1067" alt="Model in a spiked black wig reclining on a work table under a fluorescent tube" decoding="async">
+          <div class="desc">
+            <p>Zola, whose creations you can see in the photos, was looking for a photographer who could catch a glimpse of queer, free joy in her parents' fabric factory.</p>
+            <p class="ig"><a href="https://www.instagram.com/bbyaga_zola/" target="_blank" rel="noopener" aria-label="@bbyaga_zola on Instagram">@bbyaga_zola</a></p>
+          </div>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/02-model-spiked-black-wig-patched-wide-leg.webp" width="1067" height="1600" alt="Model in a spiked black wig and patched wide-leg jeans among fabric rolls" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/03-model-spiked-black-wig-holding-steel-pole.webp" width="1067" height="1600" alt="Model in a spiked black wig holding a steel pole beside stacked cardboard tubes" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/04-model-spiked-black-wig-one-arm-raised.webp" width="1067" height="1600" alt="Model in a spiked black wig with one arm raised against a green wall" decoding="async"></article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/bbyaga/05-model-striped-stockings-heels-leaning-into.webp" width="1067" height="1600" alt="Model in striped stockings and heels leaning into an orange fabric cross, seen from behind" decoding="async">
+          <p class="desc">Surrounded by fashion from a young age, she has always known she wanted to create something unapologetically different.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/06-model-fur-hat-green-bleached-hoodie-front.webp" width="1067" height="1600" alt="Model in a fur hat and green bleached hoodie in front of shelves of thread boxes" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/07-model-pink-wig-fur-leg-warmers-standing.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers standing on a sewing table" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/08-model-pink-wig-fur-leg-warmers-beside-row.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers beside a row of lockers" decoding="async"></article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/bbyaga/09-model-stacked-caps-sitting-pile-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps sitting on a pile of fabric rolls, holding scissors" decoding="async">
+          <p class="desc">Her clothes, as weird and unusual as they are, represent the energy she has found in Berlin over the past couple of years.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/10-model-stacked-caps-standing-fabric-rolls.webp" width="1067" height="1600" alt="Model in stacked caps standing on fabric rolls with arms spread" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/11-model-stacked-caps-lying-across-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps lying across fabric rolls" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/12-model-patchwork-t-shirt-gown-blonde-curly.webp" width="1067" height="1600" alt="Model in a patchwork T-shirt gown and blonde curly wig among sewing machines" decoding="async"></article>
+      </div>
+
+      <!-- Ulia -->
+      <div class="project" data-name="Ulia" data-meta="winter photoshoot, 2026">
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/ulia/01-ulia-bent-over-snow-covered-wall-green.webp" width="1280" height="1600" alt="Ulia bent over a snow-covered wall in green tights and clear platform heels" decoding="async">
+          <p class="desc">There are not that many pictures here, but they hold what we were after. A wild girl who needs no one and is on the hunt.</p>
+        </article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/ulia/02-ulia-crouching-snow-green-tights-reaching.webp" width="1280" height="1600" alt="Ulia crouching in the snow in green tights, reaching for her shoe" decoding="async">
+          <p class="desc">On a frosty day in the middle of the Berlin winter we spent hours together, working out how to portray the strong woman she is.</p>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/ulia/03-ulia-standing-fur-coat-among-snow-covered.webp" width="1600" height="1067" alt="Ulia standing in a fur coat among snow-covered bushes" decoding="async"></article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/ulia/04-ulia-crouched-low-snow-fur-coat-hair-falling.webp" width="1280" height="1600" alt="Ulia crouched low in the snow in a fur coat, her hair falling over the ground" decoding="async">
+          <p class="desc">I wanted to catch her lying in wait for prey, with a face closer to a wild animal than to a subtle, fragile girly girl.</p>
+        </article>
+        <article class="pg pg-tell">
+          <img loading="lazy" class="shot" src="img/ulia/05-ulia-lying-snow-white-tights-heels.webp" width="1280" height="1600" alt="Ulia lying in the snow in white tights and heels" decoding="async">
+          <p class="desc">Ulia remains one of my role models. She is one of the strongest and most creative people I know, and never short of a new idea.</p>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="view v-about" id="about" aria-label="About">
+    <div class="me">
+      <img loading="lazy" class="portrait" src="img/about/portrait.webp" width="1068" height="1600" alt="Portrait of Krzysztof Wiatr" decoding="async">
+      <div class="tx">
+        <p class="lede">My name is Krzysztof Wiatr and I am originally from Szczecin, a smaller city near the German and Polish border.</p>
+        <div class="body">
+          <p>I broke off my studies and boldly decided to move to Berlin to pursue my artistic goals.</p>
+          <p>I have experience in media design and I have been taking pictures for the past couple of years. I am currently open for new career opportunities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="view v-contact" id="contact" aria-label="Contact">
+    <a class="mail" href="mailto:krzysiek00724@gmail.com">krzysiek00724@gmail.com</a>
+    <div class="links"><a href="https://www.instagram.com/wiaturr/" target="_blank" rel="noopener">Instagram</a></div>
+    <p class="where">Neukölln, Berlin</p>
+  </section>
+
+  <div class="footbar">
+    <button class="fb-arrow" id="fb-prev" type="button" aria-label="Previous project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M14.5 4.5 6.5 12l8 7.5"/></svg></button>
+    <p class="fb-title" aria-live="polite"><b id="fb-name"></b><em>&middot;</em><span id="fb-meta"></span></p>
+    <button class="fb-arrow" id="fb-next" type="button" aria-label="Next project"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M9.5 4.5 17.5 12l-8 7.5"/></svg></button>
+  </div>
+
+  <div class="lb" role="dialog" aria-modal="true" aria-label="Photograph" tabindex="-1">
+    <img class="lb-img" alt="">
+    <div class="lb-bar">
+      <button class="fb-arrow" id="lb-prev" type="button" aria-label="Previous photograph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M14.5 4.5 6.5 12l8 7.5"/></svg></button>
+      <button class="fb-arrow" id="lb-next" type="button" aria-label="Next photograph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M9.5 4.5 17.5 12l-8 7.5"/></svg></button>
+    </div>
+  </div>
+
+</main>
+
+<script src="js/coin-shapes.js"></script>
+<script>
+window.__GRAIN__ = "img/coin/grain.jpg";
+window.__NORMAL__ = "img/coin/normal.jpg";
+
+</script>
+<script>
+window.__COIN__ = function(){
+"use strict";
+
+/* struck once, kept: rotation, relief, patina, flan irregularity, alloy */
+var SPIN = 0.30, RELIEF = 2.40, PATINA = 0.92, WOBBLE = 0.040, ALLOY = 'silver';
+
+var S = window.__SHAPES__, CX = 43.1, CY = 42.48, EPS = 0.3;
+
+function wobble(x, y, amt){
+  if (!amt) return [x, y];
+  var a = Math.atan2(y, x), r = Math.hypot(x, y);
+  var k = 1 + amt * (0.62*Math.sin(a*3 + 0.7) + 0.34*Math.sin(a*5 - 2.2)
+                   + 0.19*Math.sin(a*8 + 1.9) + 0.11*Math.sin(a*13 - 0.4));
+  return [Math.cos(a)*r*k, Math.sin(a)*r*k];
+}
+function ring(pts, PathCls, k, amt){
+  k = k || 1;
+  var p = new PathCls(), lx = 0, ly = 0, on = false;
+  for (var i=0;i<pts.length;i++){
+    var x = (pts[i][0]-CX)*k, y = (CY-pts[i][1])*k;
+    if (amt){ var w = wobble(x, y, amt); x = w[0]; y = w[1]; }
+    if (on && Math.abs(x-lx) < EPS && Math.abs(y-ly) < EPS) continue;
+    if (!on){ p.moveTo(x,y); on = true; } else p.lineTo(x,y);
+    lx = x; ly = y;
+  }
+  p.closePath();
+  return p;
+}
+function shapeOf(entry, holes, k, amt){
+  var sh = ring(entry.contours[0].pts, THREE.Shape, k, amt);
+  for (var i=1;i<entry.contours.length;i++) sh.holes.push(ring(entry.contours[i].pts, THREE.Path, k, amt));
+  (holes||[]).forEach(function(h){ sh.holes.push(ring(h.contours[0].pts, THREE.Path, k, amt)); });
+  return sh;
+}
+function planarUV(geo, scale){
+  var pos = geo.attributes.position, uv = new Float32Array(pos.count*2);
+  for (var i=0;i<pos.count;i++){ uv[i*2] = pos.getX(i)/scale + .5; uv[i*2+1] = pos.getY(i)/scale + .5; }
+  geo.setAttribute('uv', new THREE.BufferAttribute(uv,2));
+}
+function creviceShade(geo, lo, hi){
+  var pos = geo.attributes.position, col = new Float32Array(pos.count*3);
+  for (var i=0;i<pos.count;i++){
+    var t = (pos.getZ(i) - lo) / (hi - lo);
+    t = Math.max(0, Math.min(1, (t - 0.30) / 0.55));
+    var v = 0.30 + 0.70 * (t*t*(3-2*t));
+    col[i*3] = col[i*3+1] = col[i*3+2] = v;
+  }
+  geo.setAttribute('color', new THREE.BufferAttribute(col,3));
+}
+
+var canvas = document.getElementById('coin');
+var renderer = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true, powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio||1, 2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.04;
+
+var scene = new THREE.Scene();
+var camera = new THREE.PerspectiveCamera(30, 1, 1, 3000);
+var COIN_R = 56, camDist = 240, camTarget = 240;
+function fitDistance(){
+  var v = camera.fov * Math.PI/180;
+  var h = 2*Math.atan(Math.tan(v/2) * camera.aspect);
+  return COIN_R / Math.sin(Math.min(v,h)/2) * 1.1;
+}
+camera.position.set(0,0,camDist);
+
+function envTexture(dark){
+  var w=1024,h=512, cv=document.createElement('canvas'); cv.width=w; cv.height=h;
+  var x=cv.getContext('2d'), g=x.createLinearGradient(0,0,0,h);
+  if (dark){ g.addColorStop(0,'#3d3a36'); g.addColorStop(.42,'#1c1b1a'); g.addColorStop(.53,'#0c0c0c'); g.addColorStop(1,'#040404'); }
+  else     { g.addColorStop(0,'#fdfdfc'); g.addColorStop(.40,'#d8d6d2'); g.addColorStop(.53,'#8b8884'); g.addColorStop(1,'#3a3836'); }
+  x.fillStyle=g; x.fillRect(0,0,w,h);
+  function blob(cx,cy,rx,ry,col,a){
+    var r=x.createRadialGradient(cx,cy,0,cx,cy,rx);
+    r.addColorStop(0,col); r.addColorStop(1,'rgba(0,0,0,0)');
+    x.save(); x.globalAlpha=a; x.translate(cx,cy); x.scale(1,ry/rx); x.translate(-cx,-cy);
+    x.fillStyle=r; x.beginPath(); x.arc(cx,cy,rx,0,6.2832); x.fill(); x.restore();
+  }
+  blob(w*0.22,h*0.20,330,200,'#ffffff',1);
+  blob(w*0.70,h*0.30,240,150,'#cfe1ff',0.55);
+  blob(w*0.50,h*0.04,440,140,'#fff8ee',0.40);
+  blob(w*0.93,h*0.60,190,120,'#ffd9a8',0.30);
+  var t=new THREE.CanvasTexture(cv);
+  t.mapping = THREE.EquirectangularReflectionMapping; t.encoding = THREE.sRGBEncoding;
+  return t;
+}
+var pmrem = new THREE.PMREMGenerator(renderer); pmrem.compileEquirectangularShader();
+var envRT = null;
+function setEnv(dark){
+  var src = envTexture(dark), rt = pmrem.fromEquirectangular(src);
+  if (envRT) envRT.dispose();
+  envRT = rt; scene.environment = rt.texture; src.dispose();
+}
+
+var key  = new THREE.DirectionalLight(0xfff2da, 2.3); key.position.set(-80,95,130);
+var rim  = new THREE.DirectionalLight(0xb9d0ff, 1.25); rim.position.set(100,-25,-95);
+var fill = new THREE.DirectionalLight(0xffffff, 0.5);  fill.position.set(25,-90,55);
+var amb  = new THREE.AmbientLight(0xffffff, 0.14);
+scene.add(key, rim, fill, amb);
+
+var loader = new THREE.TextureLoader();
+var grain = loader.load(window.__GRAIN__);
+grain.wrapS = grain.wrapT = THREE.RepeatWrapping; grain.encoding = THREE.sRGBEncoding;
+grain.anisotropy = renderer.capabilities.getMaxAnisotropy();
+var grainLin = loader.load(window.__GRAIN__);
+grainLin.wrapS = grainLin.wrapT = THREE.RepeatWrapping;
+var normal = loader.load(window.__NORMAL__);
+normal.wrapS = normal.wrapT = THREE.RepeatWrapping; normal.anisotropy = grain.anisotropy;
+
+var ALLOYS = {
+  electrum:{hi:0xfff2cf, lo:0x2a2118},
+  gold    :{hi:0xffc978, lo:0x2e2113},
+  silver  :{hi:0xf4f6f8, lo:0x1e2024}
+};
+var matRelief = new THREE.MeshStandardMaterial({
+  map:grain, normalMap:normal, roughnessMap:grainLin, vertexColors:true,
+  metalness:1.0, roughness:0.27, normalScale:new THREE.Vector2(0.5,0.5), envMapIntensity:1.35
+});
+var matField = new THREE.MeshStandardMaterial({
+  map:grain, normalMap:normal, roughnessMap:grainLin,
+  metalness:0.6, roughness:0.7, normalScale:new THREE.Vector2(0.85,0.85), envMapIntensity:0.8
+});
+(function(){
+  var a = ALLOYS[ALLOY], hi = new THREE.Color(a.hi), lo = new THREE.Color(a.lo);
+  matRelief.color.copy(hi);
+  matRelief.roughness = 0.24 + 0.06*PATINA;
+  matField.color.copy(hi).lerp(lo, PATINA).multiplyScalar(1 - 0.38*PATINA);
+  matField.roughness = 0.30 + 0.50*PATINA;
+  matField.metalness = 1.00 - 0.46*PATINA;
+  matField.envMapIntensity = 1.35 - 0.72*PATINA;
+})();
+
+var byCls = {'cls-1':[], 'cls-2':[], 'cls-3':[]};
+S.forEach(function(e){ byCls[e.cls].push(e); });
+byCls['cls-2'].sort(function(a,b){ return b.area - a.area; });
+var flanE = byCls['cls-2'][0], innerE = byCls['cls-2'][1], ringE = byCls['cls-1'][0], motif = byCls['cls-3'];
+
+var DEPTH = 6.6, BEV = 1.6, BEVSIZE = 1.8, capZ = DEPTH/2 + BEV;
+var RD = 1.8, RB = 0.36;
+
+var coin = new THREE.Group(), pivot = new THREE.Group();
+pivot.add(coin); scene.add(pivot);
+
+(function buildFlan(amt){
+  var k = 1.09 + amt*1.6;
+  var geo = new THREE.ExtrudeGeometry(shapeOf(flanE, null, k, amt), {
+    depth:DEPTH, bevelEnabled:true, bevelThickness:BEV, bevelSize:BEVSIZE,
+    bevelOffset:0, bevelSegments:8, curveSegments:8
+  });
+  geo.translate(0,0,-DEPTH/2);
+  planarUV(geo, 34); geo.computeVertexNormals();
+  coin.add(new THREE.Mesh(geo, matField));
+  COIN_R = 43.1 * k * (1 + amt*1.26) + 3;
+})(WOBBLE);
+
+function reliefGroup(sign){
+  var g = new THREE.Group();
+  var o = {depth:RD, bevelEnabled:true, bevelThickness:RB, bevelSize:RB*0.92,
+           bevelOffset:0, bevelSegments:4, curveSegments:6};
+  [ shapeOf(flanE, [ringE]), shapeOf(innerE, motif) ].forEach(function(sh){
+    var geo = new THREE.ExtrudeGeometry(sh, o);
+    planarUV(geo, 34); creviceShade(geo, -RB, RD + RB); geo.computeVertexNormals();
+    g.add(new THREE.Mesh(geo, matRelief));
+  });
+  g.position.z = sign * capZ;
+  g.scale.z = sign * RELIEF;
+  if (sign < 0) g.scale.x = -1;
+  return g;
+}
+coin.add(reliefGroup(1), reliefGroup(-1));
+
+var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+var st = {spin: reduce ? 0 : SPIN, drag:false, vx:0, vy:0, px:0, py:0};
+var rotY = -0.15, rotX = 0;
+
+canvas.addEventListener('pointerdown', function(e){
+  st.drag = true; st.px = e.clientX; st.py = e.clientY;
+  canvas.classList.add('drag'); canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener('pointermove', function(e){
+  if (!st.drag) return;
+  st.vx += (e.clientX - st.px) * 0.00055;
+  st.vy += (e.clientY - st.py) * 0.00045;
+  st.px = e.clientX; st.py = e.clientY;
+});
+function up(){ st.drag = false; canvas.classList.remove('drag'); }
+canvas.addEventListener('pointerup', up);
+canvas.addEventListener('pointercancel', up);
+
+var mq = matchMedia('(prefers-color-scheme: dark)');
+function theme(){
+  var dark = false;
+  setEnv(dark);
+  renderer.toneMappingExposure = dark ? 1.14 : 1.04;
+  amb.intensity = dark ? 0.10 : 0.14;
+}
+if (mq.addEventListener) mq.addEventListener('change', theme);
+theme();
+
+function resize(){
+  var r = canvas.parentElement.getBoundingClientRect();
+  var w = Math.max(1, r.width), h = Math.max(1, r.height);
+  renderer.setSize(w, h, false);
+  camera.aspect = w/h;
+  camera.fov = w < 640 ? 34 : 30;
+  camera.updateProjectionMatrix();
+  camTarget = fitDistance();
+}
+addEventListener('resize', resize); resize(); camDist = camTarget;
+if (window.ResizeObserver) new ResizeObserver(function(){ resize(); }).observe(canvas.parentElement);
+
+var visible = true;
+new IntersectionObserver(function(e){ visible = e[0].isIntersecting; }, {threshold:0}).observe(canvas);
+
+var last = performance.now(), t0 = last;
+(function frame(now){
+  requestAnimationFrame(frame);
+  var dt = Math.min((now-last)/1000, 0.05); last = now;
+  if (!visible || window.__COIN_PAUSED__) return;
+  var t = (now - t0)/1000;
+
+  if (!st.drag) rotY += st.spin * dt * 1.15;
+  rotY += st.vx; rotX += st.vy;
+  st.vx *= 0.94; st.vy *= 0.94;
+
+  coin.rotation.y = rotY;
+  coin.rotation.x = rotX + Math.sin(t*0.33)*0.085;
+  pivot.rotation.z = Math.sin(t*0.21)*0.03;
+
+  camDist += (camTarget - camDist) * 0.08;
+  camera.position.z = camDist;
+  renderer.render(scene, camera);
+})(last);
+};
+
+</script>
+<script>
+(function(){
+  var bases = ["https://cdn.jsdelivr.net/npm/three@0.137.5",
+               "https://cdn.jsdelivr.net/npm/three@0.137.0",
+               "https://cdn.jsdelivr.net/npm/three@0.136.0"];
+  var i = 0;
+  (function next(){
+    if (i >= bases.length) return;
+    var s = document.createElement('script');
+    s.src = bases[i] + "/build/three.min.js";
+    s.onload = function(){ try{ window.__COIN__(); }catch(e){ console.error(e); } };
+    s.onerror = function(){ i++; next(); };
+    document.head.appendChild(s);
+  })();
+})();
+</script>
+<script>
+(function(){
+  var mq=window.matchMedia('(max-width:820px)');
+  function isMobile(){ return mq.matches; }
+  var views=['home','works','about','contact'];
+  var stage=document.querySelector('.stage');
+  var navLinks=document.querySelectorAll('.topbar nav a');
+  var scroller=document.querySelector('.scroller');
+  var logo=document.querySelector('.logo');
+  var footbar=document.querySelector('.footbar');
+  var fbName=document.getElementById('fb-name');
+  var fbMeta=document.getElementById('fb-meta');
+  var projects=[].slice.call(document.querySelectorAll('.project'));
+  var idx=0;
+
+  function paintProject(){
+    for(var i=0;i<projects.length;i++) projects[i].style.display = (i===idx ? '' : 'none');
+    fbName.textContent=projects[idx].getAttribute('data-name');
+    fbMeta.textContent=projects[idx].getAttribute('data-meta');
+  }
+  function goProject(step){
+    idx=(idx+step+projects.length)%projects.length;
+    paintProject();
+    if(isMobile()) window.scrollTo(0,0);
+    else if(scroller) scroller.scrollTop=0;
+  }
+  document.getElementById('fb-prev').addEventListener('click',function(){ goProject(-1); });
+  document.getElementById('fb-next').addEventListener('click',function(){ goProject(1); });
+  document.addEventListener('keydown',function(e){
+    if(stage.getAttribute('data-view')!=='works') return;
+    if(document.documentElement.classList.contains('lb-open')) return;
+    if(e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName)) return;
+    if(e.key==='ArrowLeft'){ e.preventDefault(); goProject(-1); }
+    if(e.key==='ArrowRight'){ e.preventDefault(); goProject(1); }
+  });
+  paintProject();
+
+  function updateFootbar(){
+    footbar.classList.toggle('on', stage.getAttribute('data-view')==='works');
+  }
+
+  function playLogo(){
+    if(!logo) return;
+    logo.classList.remove('play');
+    void logo.offsetWidth;
+    logo.classList.add('play');
+  }
+  function show(name){
+    if(name==='projects'||name==='work') name='works';
+    if(views.indexOf(name)<0) name='home';
+    views.forEach(function(v){ document.getElementById(v).classList.toggle('on',v===name); });
+    for(var i=0;i<navLinks.length;i++){
+      if(navLinks[i].getAttribute('data-view')===name) navLinks[i].setAttribute('aria-current','page');
+      else navLinks[i].removeAttribute('aria-current');
+    }
+    stage.setAttribute('data-view',name);
+    window.__COIN_PAUSED__ = (name!=='works');
+    if(isMobile()) window.scrollTo(0,0);
+    else if(scroller) scroller.scrollTop=0;
+    if(name==='home') playLogo();
+    document.title = name==='home' ? 'k. wiatr' : 'k. wiatr, '+name;
+    updateFootbar();
+  }
+  function route(){ show((location.hash||'#home').slice(1)); }
+  window.addEventListener('hashchange',route);
+  if(mq.addEventListener) mq.addEventListener('change',route);
+  route();
+})();
+</script>
+<script>
+(function(){
+  var gals=[].slice.call(document.querySelectorAll('[data-gallery]'));
+  if(!gals.length) return;
+  var root=document.documentElement;
+  var mq=window.matchMedia('(max-width:820px)');
+
+  /* keep each shoot in order and pick row breaks so every row fills the width
+     at a height close to the target, then let flex share each row by aspect ratio */
+  function sheet(gal){
+    var items=[].slice.call(gal.querySelectorAll('.g-item'));
+    var ars=items.map(function(el){ return parseFloat(el.getAttribute('data-ar')) || 1; });
+    var lastW=0, lastT=0;
+    function layout(){
+      var W=gal.clientWidth;
+      if(!W) return;
+      var T=mq.matches ? W*0.66 : Math.min(Math.max(window.innerHeight*0.42,240),520);
+      if(Math.abs(W-lastW)<1 && Math.abs(T-lastT)<1) return;
+      lastW=W; lastT=T;
+      var gap=parseFloat(getComputedStyle(gal).rowGap)||12;
+      var n=ars.length, best=[0], from=[0];
+      for(var j=1;j<=n;j++){
+        best[j]=Infinity;
+        for(var i=j-1, sum=0;i>=0;i--){
+          sum+=ars[i];
+          var h=(W-gap*(j-i-1))/sum;
+          if(h<T*0.5) break;
+          var c=best[i]+Math.pow((h-T)/T,2);
+          if(c<best[j]){ best[j]=c; from[j]=i; }
+        }
+      }
+      var cuts=[n];
+      for(var k=n;k>0;k=from[k]) cuts.unshift(from[k]);
+      var frag=document.createDocumentFragment();
+      for(var r=0;r<cuts.length-1;r++){
+        var row=document.createElement('div');
+        row.className='g-row';
+        for(var q=cuts[r];q<cuts[r+1];q++) row.appendChild(items[q]);
+        frag.appendChild(row);
+      }
+      gal.textContent='';
+      gal.appendChild(frag);
+    }
+    var t=null;
+    function soon(){ clearTimeout(t); t=setTimeout(layout,90); }
+    window.addEventListener('resize',soon);
+    if(window.ResizeObserver) new ResizeObserver(function(e){ if(Math.abs(e[0].contentRect.width-lastW)>=1) soon(); }).observe(gal);
+    layout();
+    return items;
+  }
+  var shoots=gals.map(sheet);
+
+  /* lightbox: steps through the shoot the photograph belongs to */
+  var lb=document.querySelector('.lb'), img=lb.querySelector('.lb-img');
+  var prev=document.getElementById('lb-prev'), next=document.getElementById('lb-next');
+  var set=shoots[0], cur=0, opener=null, sx=0, sy=0, swiped=false, refocus=false;
+  function isOpen(){ return lb.classList.contains('on'); }
+  function photo(i){
+    cur=(i+set.length)%set.length;
+    var src=set[cur].querySelector('img');
+    img.src=src.src; img.alt=src.alt;
+  }
+  function open(items,i,el){
+    set=items; opener=el; photo(i);
+    lb.classList.add('on'); root.classList.add('lb-open');
+    try{ history.pushState({lb:1},''); }catch(e){}
+    lb.focus({preventScroll:true});
+  }
+  function giveBack(){ if(opener) opener.focus({preventScroll:true}); }
+  function close(fromHistory){
+    if(!isOpen()) return;
+    lb.classList.remove('on'); root.classList.remove('lb-open');
+    if(fromHistory) return;
+    if(history.state && history.state.lb){
+      refocus=true;
+      try{ history.back(); }catch(e){ refocus=false; giveBack(); }
+    } else giveBack();
+  }
+  shoots.forEach(function(items){
+    items.forEach(function(el,i){ el.addEventListener('click',function(){ open(items,i,el); }); });
+  });
+  prev.addEventListener('click',function(e){ e.stopPropagation(); photo(cur-1); });
+  next.addEventListener('click',function(e){ e.stopPropagation(); photo(cur+1); });
+  lb.addEventListener('click',function(){ if(swiped){ swiped=false; return; } close(false); });
+  lb.addEventListener('pointerdown',function(e){ sx=e.clientX; sy=e.clientY; swiped=false; });
+  lb.addEventListener('pointerup',function(e){
+    var dx=e.clientX-sx, dy=e.clientY-sy;
+    if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){ swiped=true; photo(cur+(dx<0?1:-1)); }
+  });
+  /* going back in history puts focus on the page, so hand it back to the thumbnail right after */
+  window.addEventListener('popstate',function(){
+    if(refocus){ refocus=false; setTimeout(giveBack,0); return; }
+    if(isOpen()){ close(true); setTimeout(giveBack,0); }
+  });
+  window.addEventListener('hashchange',function(){ close(true); });
+  document.addEventListener('keydown',function(e){
+    if(!isOpen()) return;
+    if(e.key==='Escape'){ e.preventDefault(); close(false); }
+    else if(e.key==='ArrowLeft'){ e.preventDefault(); photo(cur-1); }
+    else if(e.key==='ArrowRight'){ e.preventDefault(); photo(cur+1); }
+    else if(e.key==='Tab'){ e.preventDefault(); (document.activeElement===next ? prev : next).focus(); }
+  });
+})();
+</script>
+</body>
+</html>
