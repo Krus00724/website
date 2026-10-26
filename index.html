@@ -141,6 +141,19 @@ html.lb-open,html.lb-open body{overflow:hidden}
 .coinwrap{position:absolute;inset:4% 6%}
 .coinwrap canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .coinwrap canvas.drag{cursor:grabbing}
+/* bleibt: the glass turns in the hero, the five sodas sit under it like the main nav */
+.glas{position:absolute;inset:0 0 44px 0}
+.glas canvas{display:block;width:100%;height:100%;cursor:grab;outline:none}
+.glas canvas:active{cursor:grabbing}
+.glas canvas:focus-visible{box-shadow:0 0 0 2px var(--ink)}
+.glas-load{position:absolute;left:50%;bottom:12%;width:72px;height:2px;margin-left:-36px;overflow:hidden;background:var(--line);opacity:0;transition:opacity .2s var(--ease)}
+.glas-load.on{opacity:1}
+.glas-load::after{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:var(--ink);animation:glasLoad 1.1s ease-in-out infinite}
+@keyframes glasLoad{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
+.glas-err{position:absolute;left:0;right:0;bottom:12%;font-size:13px;color:var(--mute);text-align:center}
+.flavours{position:absolute;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;justify-content:center;gap:4px clamp(18px,2.4vw,34px);font-size:15px}
+.flavours button{appearance:none;border:0;background:none;padding:4px 0;font:inherit;color:var(--mute);cursor:pointer;transition:color .25s var(--ease)}
+.flavours button:hover,.flavours button[aria-pressed="true"]{color:var(--ink)}
 /* ---------- about ---------- */
 .v-about{display:flex;align-items:center;justify-content:center;padding:26px var(--side) 34px}
 .me{display:flex;align-items:center;justify-content:center;gap:clamp(26px,3.6vw,64px);width:100%}
@@ -176,6 +189,7 @@ html.lb-open,html.lb-open body{overflow:hidden}
   .shot{max-width:100%;max-height:none}
   .pg-text .tx{max-width:none;font-size:17px}
   .marks{max-width:none}
+  .glas{bottom:64px}
   .tx{max-width:none}
   .lede{font-size:21px;max-width:none}
   .body{font-size:15px;max-width:none;margin-top:14px}
@@ -256,6 +270,33 @@ html.lb-open,html.lb-open body{overflow:hidden}
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/28-model-leaning-against-white-caravan.webp" width="1067" height="1600" alt="Model leaning against a white caravan" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/29-model-cut-off-denim-vest-graffiti-wall.webp" width="1067" height="1600" alt="Model in a cut-off denim vest by a graffiti wall" decoding="async"></article>
         <article class="pg"><img loading="lazy" class="shot" src="img/ballanheim/30-model-tartan-kilt-sitting-stairwell.webp" width="1200" height="1600" alt="Model in a tartan kilt sitting on a stairwell" decoding="async"></article>
+      </div>
+
+      <!-- bleibt -->
+      <div class="project" data-name="bleibt" data-meta="brand concept, packaging and 3D, 2026">
+        <article class="pg"><div class="hero">
+          <div class="glas"><canvas id="glas" data-models="js/bleibt/{slug}.js" data-env="js/bleibt/studio.js" data-hash="off" tabindex="0" role="img" aria-label="bleibt glass with Second Date soda, an aluminium twist lid and a paper tamper strip over the lid. Drag to turn it."></canvas><div class="glas-load" id="glas-bar" aria-hidden="true"></div></div>
+          <nav class="flavours" aria-label="bleibt sodas">
+            <button type="button" data-slug="second-date" data-name="Second Date" aria-pressed="true">Second Date</button>
+            <button type="button" data-slug="raucherraum" data-name="Raucherraum" aria-pressed="false">Raucherraum</button>
+            <button type="button" data-slug="golden-hour" data-name="Golden Hour" aria-pressed="false">Golden Hour</button>
+            <button type="button" data-slug="after-hours" data-name="After Hours" aria-pressed="false">After Hours</button>
+            <button type="button" data-slug="soundcheck" data-name="Soundcheck" aria-pressed="false">Soundcheck</button>
+          </nav>
+        </div></article>
+        <article class="pg pg-text">
+          <div class="tx">
+            <p>bleibt is a&nbsp;brand I&nbsp;made up for Berlin bars: five sodas sold in a&nbsp;heavy glass jar with an aluminium twist lid. The bartender pours 4&nbsp;cl of spirit up to a&nbsp;line etched into the glass and the long drink is ready. The guest takes the glass home.</p>
+            <p>People often pick a&nbsp;drink because it looks good and fits their style, more than because it is the best one. In Germany, true fruits sells smoothies in glass bottles and even sells shakers and pourers so people keep the empties. As a&nbsp;kid I&nbsp;loved Voss water for its clear glass cylinder, and I&nbsp;never cared about the water.</p>
+            <p>Germany has kept mustard jars as drinking glasses since the 19th century. In Poland, where I&nbsp;grew up, that glass even has its own name, musztardówka. bleibt takes the habit and makes the jar the reason to buy.</p>
+            <p>The timing works. Since 2023, German caf&eacute;s and bars that sell drinks to go have to offer a&nbsp;reusable option, and in 2025 only 61% of Gen&nbsp;Z in Germany drank alcohol at all. A&nbsp;soda that tastes right with or without the 4&nbsp;cl fits that crowd, and a&nbsp;glass that stays fits the new rules.</p>
+            <p>The plan is to sell it by the crate to bars in Neuk&ouml;lln, Kreuzberg and Friedrichshain, to caf&eacute;s that turn into bars at night and to Sp&auml;tis. The people who keep the glass are the urban creatives the Sinus Institute calls Expeditives, about one in ten Germans, followed by Performers and the Neo-Ecological milieu.</p>
+            <p>The jar is 100&nbsp;mm wide, 82&nbsp;mm tall and holds 360&nbsp;ml, shaped like a&nbsp;cosmetics jar so it reads as an object. 200&nbsp;ml of soda goes in, and the line 60&nbsp;mm from the base marks the extra 4&nbsp;cl. The brushed aluminium lid has a&nbsp;seal, so the soda stays fizzy and the drink can leave the bar.</p>
+            <p>The narrow 28&nbsp;mm label carries only the flavour, each named after a&nbsp;moment of a&nbsp;Berlin night: Second Date, Raucherraum, Golden Hour, After Hours and Soundcheck. The brand sits on a&nbsp;paper strip across the lid that tears the first time you twist it, so you know nobody has opened the jar before you. The spray-painted grain of the wordmark runs through every label.</p>
+          </div>
+        </article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/01-bleibt-flavour-labels-five-sodas.webp" width="2592" height="1408" alt="The five bleibt flavour labels laid flat: Second Date, Raucherraum, Golden Hour, After Hours and Soundcheck"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/02-bleibt-tamper-strips-over-the-lid.webp" width="1352" height="1216" alt="The five bleibt tamper strips laid flat, with the wordmark on both ends and tear cuts where the lid edge sits"></article>
       </div>
 
       <!-- Gbenga -->
@@ -642,6 +683,17 @@ var last = performance.now(), t0 = last;
     for(var i=0;i<projects.length;i++) projects[i].style.display = (i===idx ? '' : 'none');
     fbName.textContent=projects[idx].getAttribute('data-name');
     fbMeta.textContent=projects[idx].getAttribute('data-meta');
+    bleibtLoad();
+  }
+  /* the bleibt glass loads its 3D only once someone opens that project */
+  var bleibtOn=false;
+  function bleibtLoad(){
+    if(bleibtOn || stage.getAttribute('data-view')!=='works') return;
+    if(projects[idx].getAttribute('data-name')!=='bleibt') return;
+    bleibtOn=true;
+    var s=document.createElement('script');
+    s.src='js/bleibt-viewer.js';
+    document.body.appendChild(s);
   }
   function goProject(step){
     idx=(idx+step+projects.length)%projects.length;
@@ -685,6 +737,7 @@ var last = performance.now(), t0 = last;
     if(name==='home') playLogo();
     document.title = name==='home' ? 'k. wiatr' : 'k. wiatr, '+name;
     updateFootbar();
+    bleibtLoad();
   }
   function route(){ show((location.hash||'#home').slice(1)); }
   window.addEventListener('hashchange',route);
