@@ -47,6 +47,13 @@ p,h1,h2,figure,dl{margin:0}
 .topbar nav{display:flex;gap:clamp(18px,2.4vw,34px);font-size:15px}
 .topbar nav a{color:var(--mute);transition:color .25s var(--ease)}
 .topbar nav a[aria-current="page"]{color:var(--ink)}
+/* works menu: hovering or focusing "works" lists every project */
+.navworks{position:relative}
+.navworks .menu{position:absolute;top:100%;left:-14px;padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;white-space:nowrap;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .2s var(--ease),transform .2s var(--ease),visibility 0s linear .2s}
+.navworks:hover .menu,.navworks:focus-within .menu,.navworks.open .menu{opacity:1;visibility:visible;transform:none;transition:opacity .2s var(--ease),transform .2s var(--ease)}
+.topbar nav .menu a[aria-current="true"],.topbar nav .menu a:hover{color:var(--ink)}
 
 /* ---------- footer bar: the project you are in ---------- */
 .footbar{position:absolute;left:0;right:0;bottom:0;height:var(--footh);z-index:20;display:flex;align-items:center;justify-content:center;gap:clamp(16px,3vw,44px);
@@ -150,7 +157,10 @@ html.lb-open,html.lb-open body{overflow:hidden}
 .glas-load.on{opacity:1}
 .glas-load::after{content:"";position:absolute;top:0;bottom:0;left:0;width:40%;background:var(--ink);animation:glasLoad 1.1s ease-in-out infinite}
 @keyframes glasLoad{from{transform:translateX(-100%)}to{transform:translateX(250%)}}
-.glas-err{position:absolute;left:0;right:0;bottom:12%;font-size:13px;color:var(--mute);text-align:center}
+.glas-err{display:none}
+/* a still image stands in until the 3D has drawn its first frame, and stays if it never does */
+.coinwrap .still,.glas .still{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;transition:opacity .4s var(--ease)}
+.coinwrap.ready .still,.glas.ready .still{opacity:0}
 .flavours{position:absolute;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;justify-content:center;gap:4px clamp(18px,2.4vw,34px);font-size:15px}
 .flavours button{appearance:none;border:0;background:none;padding:4px 0;font:inherit;color:var(--mute);cursor:pointer;transition:color .25s var(--ease)}
 .flavours button:hover,.flavours button[aria-pressed="true"]{color:var(--ink)}
@@ -224,8 +234,8 @@ html.lb-open,html.lb-open body{overflow:hidden}
     <div class="scroller" tabindex="-1">
 
       <!-- Ballanheim -->
-      <div class="project" data-name="Ballanheim" data-meta="brand identity, photography and web, 2026">
-        <article class="pg"><div class="hero"><div class="coinwrap"><canvas id="coin"></canvas></div></div></article>
+      <div class="project" data-slug="ballanheim" data-name="Ballanheim" data-meta="brand identity, photography and web, 2026">
+        <article class="pg"><div class="hero"><div class="coinwrap"><img class="still" src="img/ballanheim/14-ballanheim-seal-black-white.webp" width="1344" height="896" alt="The Ballanheim seal" decoding="async"><canvas id="coin"></canvas></div></div></article>
         <article class="pg pg-text">
           <div class="tx">
             <p>Ballanheim is a&nbsp;queer upcycling label from Berlin, run by Andrew, who turns discarded clothes into one-off pieces. I&nbsp;photographed the first campaign, built the identity around a&nbsp;single struck seal and wrote the website, so everything the label puts out is its own.</p>
@@ -273,9 +283,9 @@ html.lb-open,html.lb-open body{overflow:hidden}
       </div>
 
       <!-- bleibt -->
-      <div class="project" data-name="bleibt" data-meta="brand concept, packaging and 3D, 2026">
+      <div class="project" data-slug="bleibt" data-name="bleibt" data-meta="brand concept, packaging and 3D, 2026">
         <article class="pg"><div class="hero">
-          <div class="glas"><canvas id="glas" data-models="js/bleibt/{slug}.js" data-env="js/bleibt/studio.js" data-hash="off" tabindex="0" role="img" aria-label="bleibt glass with Second Date soda, an aluminium twist lid and a paper tamper strip over the lid. Drag to turn it."></canvas><div class="glas-load" id="glas-bar" aria-hidden="true"></div></div>
+          <div class="glas"><img class="still" id="glas-still" src="img/bleibt/still-second-date.webp" width="1400" height="1400" alt="bleibt glass with Second Date soda" loading="lazy" decoding="async"><canvas id="glas" data-models="js/bleibt/{slug}.js" data-env="js/bleibt/studio.js" data-hash="off" tabindex="0" role="img" aria-label="bleibt glass with Second Date soda, an aluminium twist lid and a paper tamper strip over the lid. Drag to turn it."></canvas><div class="glas-load" id="glas-bar" aria-hidden="true"></div></div>
           <nav class="flavours" aria-label="bleibt sodas">
             <button type="button" data-slug="second-date" data-name="Second Date" aria-pressed="true">Second Date</button>
             <button type="button" data-slug="raucherraum" data-name="Raucherraum" aria-pressed="false">Raucherraum</button>
@@ -297,10 +307,47 @@ html.lb-open,html.lb-open body{overflow:hidden}
         </article>
         <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/01-bleibt-flavour-labels-five-sodas.webp" width="2592" height="1408" alt="The five bleibt flavour labels laid flat: Second Date, Raucherraum, Golden Hour, After Hours and Soundcheck"></article>
         <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/02-bleibt-tamper-strips-over-the-lid.webp" width="1352" height="1216" alt="The five bleibt tamper strips laid flat, with the wordmark on both ends and tear cuts where the lid edge sits"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/03-bleibt-instructions-second-date-paper-poster.webp" width="2000" height="1415" alt="Second Date poster on folded paper: a flat rhubarb shape cut by the 4 cl line and eight numbered rules about rhubarb, rose and pink pepper"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/04-bleibt-instructions-raucherraum-paper-poster.webp" width="2000" height="1415" alt="Raucherraum poster on folded paper: a flat pear shape cut by the 4 cl line and nine rules about pears, lapsang and birch syrup"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/05-bleibt-instructions-golden-hour-paper-poster.webp" width="2000" height="1415" alt="Golden Hour poster on folded paper: a flat chili shape cut by the 4 cl line and ten rules about chili, ginger and sea buckthorn"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/06-bleibt-instructions-after-hours-paper-poster.webp" width="2000" height="1415" alt="After Hours poster on folded paper: flat yuzu halves cut by the 4 cl line and nine rules about yuzu, cucumber and salt"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/07-bleibt-instructions-soundcheck-paper-poster.webp" width="2000" height="1415" alt="Soundcheck poster on folded paper: a flat mate gourd cut by the 4 cl line and ten rules about mate, matcha and lime"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/08-bleibt-golden-hour-poster-tree-shadows-wall.webp" width="1600" height="1600" alt="Golden Hour poster on a billboard under tree shadows"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/09-bleibt-second-date-poster-wheatpasted-paris-wall.webp" width="1472" height="1962" alt="Second Date poster wheat-pasted on a street wall, rubbish bags in front"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/10-bleibt-raucherraum-poster-lightbox-tiled-passage.webp" width="1605" height="900" alt="Raucherraum poster in a lightbox in a tiled underground passage"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/11-bleibt-after-hours-poster-car-park-billboard.webp" width="1470" height="980" alt="After Hours poster on a billboard in a car park, lit by two lamps"></article>
+        <article class="pg"><img decoding="async" loading="lazy" class="shot" src="img/bleibt/12-bleibt-soundcheck-poster-framed-board-concrete-wall.webp" width="1565" height="908" alt="Soundcheck poster in a frame on a concrete wall"></article>
+      </div>
+
+      <!-- Polish Fem -->
+      <div class="project" data-slug="polish-fem" data-name="Polish Fem" data-meta="styling, art direction and photos, 2024">
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/01-polish-fem-model-red-tights-kneeling-pitch-corner-night-flash.webp" width="2000" height="1333" alt="Model in red tights and heels kneeling at the corner of a football pitch at night, lit by a flash" decoding="async"></article>
+        <article class="pg pg-text">
+          <div class="tx">
+            <p>The idea came from a&nbsp;conversation with a&nbsp;friend of mine, who is also from Poland. We realised how differently people see the two of us through the lens of gender, and how often she is read as the woman from the East.</p>
+            <p>So I&nbsp;wanted a&nbsp;slightly messy shoot built on that picture. She is the gangster&rsquo;s girlfriend, and the gangster turns up too, in a&nbsp;balaclava.</p>
+            <p>The colours follow the Polish flag, white and red.</p>
+            <p>She is provocative and free in her poses, and they don&rsquo;t have to suggest anything other than that she is sexual. Nothing to add, nothing to take away.</p>
+            <p>I&nbsp;did the styling, the art direction, the photos and the editing.</p>
+          </div>
+        </article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/02-polish-fem-hand-green-nails-white-line-red-tracksuit-sleeve.webp" width="2000" height="1333" alt="Hand with green nails on the white line of an artificial pitch, red tracksuit sleeve" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/03-polish-fem-model-red-tracksuit-lying-pitch-arm-along-line.webp" width="2000" height="1333" alt="Model in a red tracksuit lying on the pitch with one arm along the white line" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/04-polish-fem-model-red-tracksuit-sitting-on-pitch-line-boots.webp" width="2000" height="1333" alt="Model in a red tracksuit and black boots sitting on the pitch line" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/05-polish-fem-masked-man-holding-model-from-behind-green-fence.webp" width="1333" height="2000" alt="Man in a balaclava holding the model from behind against a green fence" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/06-polish-fem-model-floral-headscarf-white-cardigan-on-pitch.webp" width="2000" height="1333" alt="Model in a floral headscarf and white fur-trimmed cardigan on the pitch" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/07-polish-fem-model-white-cardigan-red-tights-on-all-fours-pitch.webp" width="2000" height="1333" alt="Model in a white cardigan and red tights on all fours on the pitch, looking back" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/08-polish-fem-red-tights-black-heels-on-turf-under-flash.webp" width="2000" height="1333" alt="Red tights and black heels on the turf under a flash" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/09-polish-fem-model-crawling-pitch-silver-heel-raised.webp" width="2000" height="1333" alt="Model crawling across the pitch with one silver heel raised" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/10-polish-fem-masked-man-leather-jacket-against-roller-shutter.webp" width="2000" height="1333" alt="Man in a balaclava and leather jacket against a roller shutter" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/11-polish-fem-model-fur-coat-headscarf-chair-in-street.webp" width="2000" height="1333" alt="Model in a fur coat and headscarf on a chair in the middle of a street at night" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/12-polish-fem-model-fur-coat-chair-white-van-passing.webp" width="2000" height="1334" alt="Model on the chair in the street as a white van passes" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/13-polish-fem-model-fur-coat-chair-parked-car-at-night.webp" width="2000" height="1333" alt="Model on the chair in front of a parked car at night" decoding="async"></article>
+        <article class="pg"><img loading="lazy" class="shot" src="img/polishfem/14-polish-fem-masked-man-behind-model-on-chair-yellow-bus.webp" width="1334" height="2000" alt="Man in a balaclava standing behind the model on her chair, a yellow bus behind them" decoding="async"></article>
       </div>
 
       <!-- Gbenga -->
-      <div class="project" data-name="Press photos for Gbenga" data-meta="photography and styling, 2024">
+      <div class="project" data-slug="gbenga" data-name="Press photos for Gbenga" data-meta="photography and styling, 2024">
         <article class="pg"><img loading="lazy" class="shot" src="img/gbenga/01-gbenga-white-tank-top-street-front-large.webp" width="1067" height="1600" alt="Gbenga in a white tank top on a street in front of a large housing block" decoding="async"></article>
         <article class="pg pg-text">
           <div class="tx">
@@ -326,7 +373,7 @@ html.lb-open,html.lb-open body{overflow:hidden}
       </div>
 
       <!-- BByaga -->
-      <div class="project" data-name="BByaga" data-meta="photos for a new clothing collection, 2025">
+      <div class="project" data-slug="bbyaga" data-name="BByaga" data-meta="photos for a new clothing collection, 2025">
         <article class="pg"><img loading="lazy" class="shot" src="img/bbyaga/01-model-spiked-black-wig-reclining-work-table.webp" width="1600" height="1067" alt="Model in a spiked black wig reclining on a work table under a fluorescent tube" decoding="async"></article>
         <article class="pg pg-text">
           <div class="tx">
@@ -350,7 +397,7 @@ html.lb-open,html.lb-open body{overflow:hidden}
       </div>
 
       <!-- Ulia -->
-      <div class="project" data-name="Ulia" data-meta="winter photoshoot, 2026">
+      <div class="project" data-slug="ulia" data-name="Ulia" data-meta="winter photoshoot, 2026">
         <article class="pg"><img loading="lazy" class="shot" src="img/ulia/01-ulia-bent-over-snow-covered-wall-green.webp" width="1280" height="1600" alt="Ulia bent over a snow-covered wall in green tights and clear platform heels" decoding="async"></article>
         <article class="pg pg-text">
           <div class="tx">
@@ -373,10 +420,11 @@ html.lb-open,html.lb-open body{overflow:hidden}
     <div class="me">
       <img loading="lazy" class="portrait" src="img/about/portrait.webp" width="1068" height="1600" alt="Portrait of Krzysztof Wiatr" decoding="async">
       <div class="tx">
-        <p class="lede">My name is Krzysztof Wiatr and I&nbsp;am originally from Szczecin, a&nbsp;smaller city near the German and Polish border.</p>
+        <p class="lede">My name is Krzysztof Wiatr and I&nbsp;work across visual identity, packaging, layout, photography and websites.</p>
         <div class="body">
-          <p>I&nbsp;broke off my medical studies and boldly decided to move to Berlin to pursue my artistic goals, where I&nbsp;finished an Ausbildung as a&nbsp;Mediengestalter.</p>
-          <p>I&nbsp;have been taking pictures for the past couple of years and I&nbsp;am currently open for new career opportunities.</p>
+          <p>I&rsquo;m particularly interested in art direction, photography, styling and design, and enjoy exploring different creative directions across a&nbsp;project.</p>
+          <p>I&nbsp;work with Adobe InDesign, Illustrator, Photoshop and Lightroom, and have a&nbsp;basic knowledge of HTML, CSS, JavaScript and Blender.</p>
+          <p>I&nbsp;completed my media design training at Cimdata in Berlin and also completed photography training.</p>
         </div>
       </div>
     </div>
@@ -626,7 +674,7 @@ if (window.ResizeObserver) new ResizeObserver(function(){ resize(); }).observe(c
 var visible = true;
 new IntersectionObserver(function(e){ visible = e[0].isIntersecting; }, {threshold:0}).observe(canvas);
 
-var last = performance.now(), t0 = last;
+var last = performance.now(), t0 = last, coinShown = false;
 (function frame(now){
   requestAnimationFrame(frame);
   var dt = Math.min((now-last)/1000, 0.05); last = now;
@@ -644,6 +692,7 @@ var last = performance.now(), t0 = last;
   camDist += (camTarget - camDist) * 0.08;
   camera.position.z = camDist;
   renderer.render(scene, camera);
+  if (!coinShown){ coinShown = true; canvas.parentElement.classList.add('ready'); }
 })(last);
 };
 
@@ -679,10 +728,46 @@ var last = performance.now(), t0 = last;
   var projects=[].slice.call(document.querySelectorAll('.project'));
   var idx=0;
 
+  /* every project has its own address, e.g. #bleibt */
+  function slugAt(i){ return projects[i].getAttribute('data-slug'); }
+  function findProject(s){ for(var i=0;i<projects.length;i++){ if(slugAt(i)===s) return i; } return -1; }
+  function setHash(){ try{ history.replaceState(history.state,'','#'+slugAt(idx)); }catch(e){} }
+
+  /* the works menu lists the projects in the order they appear */
+  var worksLink=document.querySelector('.topbar nav a[data-view="works"]');
+  var worksWrap=document.createElement('div');
+  worksWrap.className='navworks';
+  worksLink.parentNode.insertBefore(worksWrap,worksLink);
+  worksWrap.appendChild(worksLink);
+  var menu=document.createElement('div');
+  menu.className='menu';
+  menu.setAttribute('aria-label','Projects');
+  projects.forEach(function(p){
+    var a=document.createElement('a');
+    a.href='#'+p.getAttribute('data-slug');
+    a.textContent=p.getAttribute('data-name');
+    a.addEventListener('click',function(e){
+      worksWrap.classList.remove('open');
+      if(location.hash===a.hash){ e.preventDefault(); route(); }
+      setTimeout(function(){ a.blur(); },0);
+    });
+    menu.appendChild(a);
+  });
+  worksWrap.appendChild(menu);
+  var menuLinks=[].slice.call(menu.querySelectorAll('a'));
+  /* on touch screens the first tap on "works" opens the list */
+  var noHover=window.matchMedia('(hover: none)');
+  worksLink.addEventListener('click',function(e){
+    if(noHover.matches && !worksWrap.classList.contains('open')){ e.preventDefault(); worksWrap.classList.add('open'); }
+  });
+  document.addEventListener('click',function(e){ if(!worksWrap.contains(e.target)) worksWrap.classList.remove('open'); });
+
   function paintProject(){
     for(var i=0;i<projects.length;i++) projects[i].style.display = (i===idx ? '' : 'none');
     fbName.textContent=projects[idx].getAttribute('data-name');
     fbMeta.textContent=projects[idx].getAttribute('data-meta');
+    menuLinks.forEach(function(a,i){ if(i===idx) a.setAttribute('aria-current','true'); else a.removeAttribute('aria-current'); });
+    if(stage.getAttribute('data-view')==='works') document.title='k. wiatr, '+projects[idx].getAttribute('data-name');
     bleibtLoad();
   }
   /* the bleibt glass loads its 3D only once someone opens that project */
@@ -698,6 +783,7 @@ var last = performance.now(), t0 = last;
   function goProject(step){
     idx=(idx+step+projects.length)%projects.length;
     paintProject();
+    setHash();
     if(isMobile()) window.scrollTo(0,0);
     else if(scroller) scroller.scrollTop=0;
   }
@@ -735,11 +821,25 @@ var last = performance.now(), t0 = last;
     if(isMobile()) window.scrollTo(0,0);
     else if(scroller) scroller.scrollTop=0;
     if(name==='home') playLogo();
-    document.title = name==='home' ? 'k. wiatr' : 'k. wiatr, '+name;
+    document.title = name==='home' ? 'k. wiatr' : 'k. wiatr, '+(name==='works' ? projects[idx].getAttribute('data-name') : name);
+    if(name==='works') setHash();
     updateFootbar();
     bleibtLoad();
   }
-  function route(){ show((location.hash||'#home').slice(1)); }
+  function route(){
+    var h=(location.hash||'#home').slice(1), p=findProject(h);
+    if(p>=0){ idx=p; paintProject(); show('works'); }
+    else show(h);
+  }
+
+  /* bleibt: the still image follows the chosen soda, so it works even without 3D */
+  var glasStill=document.getElementById('glas-still');
+  [].forEach.call(document.querySelectorAll('.flavours button'),function(b,i,all){
+    b.addEventListener('click',function(){
+      if(glasStill){ glasStill.src='img/bleibt/still-'+b.getAttribute('data-slug')+'.webp'; glasStill.alt='bleibt glass with '+b.getAttribute('data-name')+' soda'; }
+      [].forEach.call(all,function(x){ x.setAttribute('aria-pressed',String(x===b)); });
+    });
+  });
   window.addEventListener('hashchange',route);
   if(mq.addEventListener) mq.addEventListener('change',route);
   route();
