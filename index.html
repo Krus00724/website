@@ -59,7 +59,7 @@ a{color:#464742;text-decoration:none}a:hover{color:#5d5e58}
 .kw.bg-offwhite .kw-bg{background:none}
 .kw.bg-offwhite .kw-bg span{display:none}
 .kw .kw-type{font-family:var(--display);font-weight:600;letter-spacing:.07em;text-transform:uppercase;text-shadow:0 0 .3px currentColor}
-.kw-paper{position:fixed;inset:0;z-index:1;pointer-events:none;background:url(img/paper-a.png) 0 0/395px 220px repeat,url(img/paper-b.png) 173px 97px/337px 187.6px repeat;background-blend-mode:multiply;mix-blend-mode:multiply}
+.kw-paper{position:fixed;inset:0;z-index:1;pointer-events:none;background:url(img/misc/paper2-a.png) 0 0/395px 220px repeat,url(img/misc/paper2-b.png) 173px 97px/337px 187.6px repeat;background-blend-mode:multiply;mix-blend-mode:multiply}
 .kw-in{position:relative;z-index:2}
 
 .kw-nav{position:fixed;top:0;left:0;right:0;height:var(--barh);display:flex;justify-content:center;align-items:center;gap:30px;z-index:7;background:rgba(255,255,255,.66);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
@@ -217,6 +217,36 @@ html{scroll-snap-type:none}
 .kw-foot p{font-size:13px}
 }
 @media (prefers-reduced-motion: reduce){.kw-bg span{animation:none}}
+.kw .kw-gal{scroll-snap-align:start;padding:30px clamp(40px,7vw,150px) calc(var(--footh) + 44px);display:flex;flex-direction:column;align-items:center;gap:26px}
+.kw .kw-gal-open{display:flex;flex-direction:column;align-items:center;gap:16px;padding:0;border:0;background:none;color:var(--ink);cursor:pointer}
+.kw .kw-gal-strip{display:flex;gap:8px;height:clamp(72px,11vh,118px);max-width:min(var(--shotw),calc(100vw - 32px));overflow:hidden}
+.kw .kw-gal-strip img{display:block;height:100%;width:auto;transition:opacity .25s ease}
+.kw .kw-gal-open:hover .kw-gal-strip img{opacity:.78}
+.kw .kw-gal-label{font-family:var(--display);font-weight:600;font-size:13px;line-height:20px;letter-spacing:.09em;text-transform:uppercase;text-shadow:0 0 .3px currentColor;filter:url(#kwtypeS)}
+.kw .kw-gal.is-open .kw-gal-strip{display:none}
+.kw .kw-gal-grid{columns:3 260px;column-gap:14px;width:min(var(--shotw),1240px)}
+.kw .kw-gal-item{display:block;width:100%;margin:0 0 14px;padding:0;border:0;background:none;cursor:zoom-in;break-inside:avoid}
+.kw .kw-gal-item img{display:block;width:100%;height:auto}
+.kw .kw-gal-item.is-wide{column-span:all;margin-bottom:22px}
+.kw-lb{position:fixed;inset:0;z-index:30;display:flex;align-items:center;justify-content:center;background:rgba(253,253,253,.97);cursor:zoom-out}
+.kw-lb img{display:block;max-width:calc(100vw - 170px);max-height:calc(100vh - 120px);object-fit:contain;cursor:default}
+.kw .kw-lb-arr{position:absolute;top:50%;width:56px;height:56px;margin-top:-28px;display:flex;align-items:center;justify-content:center;padding:0;border:0;background:none;color:var(--graphite);cursor:pointer;transition:color .2s ease}
+.kw .kw-lb-arr:hover{color:var(--ink)}
+.kw .kw-lb-prev{left:18px}
+.kw .kw-lb-next{right:18px}
+.kw-lb-arr svg{display:block;width:24px;height:24px}
+.kw .kw-lb-close{position:absolute;top:16px;right:20px;height:44px;padding:0 8px;border:0;background:none;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink);cursor:pointer;text-shadow:0 0 .3px currentColor;filter:url(#kwtypeS)}
+@media (max-width:820px){
+.kw .kw-gal{padding:22px 16px 64px;gap:20px}
+.kw .kw-gal-grid{columns:2 140px;column-gap:8px;width:100%}
+.kw .kw-gal-item{margin-bottom:8px}
+.kw-lb img{max-width:100vw;max-height:calc(100vh - 150px)}
+.kw .kw-lb-arr{top:auto;bottom:20px;margin-top:0}
+.kw .kw-lb-prev{left:calc(50% - 72px)}
+.kw .kw-lb-next{right:calc(50% - 72px)}
+}
+.kw .kw-gal:not(.is-open) .kw-gal-grid{display:none}
+.kw-lb[hidden]{display:none}
 </style>
 </head>
 <body>
@@ -254,75 +284,10 @@ html{scroll-snap-type:none}
 <p>Ballanheim is a queer upcycling label from Berlin run by Andrew, who turns discarded clothes into one-off pieces. I shot the first campaign, built the identity around a single struck seal and wrote the website, so everything the label puts out feels like its own.</p><p>Andrew works at the local Humana, which is also one of his main sources of inspiration. He draws a lot from the people who put together a whole look from worn second-hand pieces.</p><p>It’s not just the style that makes Ballanheim stand out, but the vision behind it too. Everything he makes is made from recycled materials.</p><p>When I interviewed him for the website, I found out that he wanted to create something closely connected to his Scottish heritage, but also something that pushes back against the old way of doing things. That kind of attitude feels pretty familiar in Berlin.</p><p>For Andrew, clothes should have no gender, feel as comfortable as possible and work just as well on the street as they do on the dancefloor. He brings a fresh energy to traditional patterns from his home country.</p><p>For the campaign, he wanted to use daylight and only bring out the flash when it got too dark. The idea was to keep everything raw.</p><p>The project also taught me how to find a compromise with a client and how to have the conversations that help you understand what they actually want.</p><p class="ig"><a href="https://www.instagram.com/ballanheimm/" target="_blank" rel="noopener">@ballanheimm</a><span>·</span><a href="https://ballanheim.com" target="_blank" rel="noopener">ballanheim.com</a></p>
 </div>
 </article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/01-ballanheim-campaign-banner-black-timber.webp" width="2000" height="1333" alt="Ballanheim campaign banner on a black timber hoarding" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/02-ballanheim-campaign-billboard-under-concrete.webp" width="2000" height="1333" alt="Ballanheim campaign billboard under a concrete canopy" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/03-ballanheim-campaign-poster-framed-weathered.webp" width="2000" height="1334" alt="Ballanheim campaign poster framed on a weathered wall" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/04-ballanheim-business-cards-embossed-white.webp" width="1344" height="896" alt="Ballanheim business cards embossed on white and black stock" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/05-ballanheim-invitation-cards-white-black.webp" width="1344" height="896" alt="Ballanheim invitation cards in white and black" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/06-blind-embossed-ballanheim-cards-concrete.webp" width="1344" height="896" alt="Blind-embossed Ballanheim cards on concrete" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/09-ballanheim-website-laptop.webp" width="2000" height="1333" alt="Ballanheim website on a laptop" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<div class="marks"><img src="img/ballanheim/10-ballanheim-horizontal-logo-black-white.webp" width="1344" height="896" alt="Ballanheim horizontal logo, black on white" loading="lazy" decoding="async"><img src="img/ballanheim/11-ballanheim-horizontal-logo-white-black.webp" width="1344" height="896" alt="Ballanheim horizontal logo, white on black" loading="lazy" decoding="async"><img src="img/ballanheim/12-ballanheim-wordmark-black-white.webp" width="1344" height="896" alt="Ballanheim wordmark, black on white" loading="lazy" decoding="async"><img src="img/ballanheim/13-ballanheim-wordmark-white-black.webp" width="1344" height="896" alt="Ballanheim wordmark, white on black" loading="lazy" decoding="async"><img src="img/ballanheim/ballanheim-seal-white-ground.webp" width="900" height="600" alt="Ballanheim seal, black on white" loading="lazy" decoding="async"><img src="img/ballanheim/15-ballanheim-seal-white-black.webp" width="1344" height="896" alt="Ballanheim seal, white on black" loading="lazy" decoding="async"></div>
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/helvetica-neue-specimen-ballanheim-identity.webp" width="1600" height="900" alt="Helvetica Neue specimen from the Ballanheim identity" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/17-model-holding-weighted-pole-bare-concrete.webp" width="1600" height="1067" alt="Model holding a weighted pole in a bare concrete room" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/18-model-carrying-weighted-bar-across-shoulders.webp" width="1600" height="1067" alt="Model carrying the weighted bar across the shoulders" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/19-model-concrete-block-over-one-shoulder.webp" width="1067" height="1600" alt="Model with a concrete block over one shoulder" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/20-model-leaning-peeling-wall-beside-factory.webp" width="1067" height="1600" alt="Model leaning on a peeling wall beside a factory window" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/21-model-tartan-jacket-tiara-crouching-against.webp" width="1600" height="1067" alt="Model in a tartan jacket and tiara crouching against tiles" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/22-two-models-blue-tiled-room-one-red-dress.webp" width="1067" height="1600" alt="Two models in a blue-tiled room, one in a red dress" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/23-two-models-laughing-blue-tiled-room.webp" width="1600" height="1067" alt="Two models laughing in the blue-tiled room" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/24-model-red-dress-rusted-railing-platform.webp" width="1067" height="1600" alt="Model in a red dress on a rusted railing platform" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/25-two-models-large-industrial-window.webp" width="1600" height="1067" alt="Two models by a large industrial window" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/26-two-models-phones-car-park.webp" width="1067" height="1600" alt="Two models on their phones in a car park" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/27-model-leaning-car-smashed-windscreen.webp" width="1067" height="1600" alt="Model leaning on a car with a smashed windscreen" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/28-model-leaning-against-white-caravan.webp" width="1067" height="1600" alt="Model leaning against a white caravan" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/29-model-cut-off-denim-vest-graffiti-wall.webp" width="1067" height="1600" alt="Model in a cut-off denim vest by a graffiti wall" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ballanheim/30-model-tartan-kilt-sitting-stairwell.webp" width="1200" height="1600" alt="Model in a tartan kilt sitting on a stairwell" loading="lazy" decoding="async">
-</article>
+<section class="kw-gal">
+<button type="button" class="kw-gal-open" aria-expanded="false"><span class="kw-gal-strip"><img src="img/ballanheim/01-ballanheim-campaign-banner-black-timber.webp" alt="" loading="lazy" decoding="async"><img src="img/ballanheim/02-ballanheim-campaign-billboard-under-concrete.webp" alt="" loading="lazy" decoding="async"><img src="img/ballanheim/03-ballanheim-campaign-poster-framed-weathered.webp" alt="" loading="lazy" decoding="async"><img src="img/ballanheim/04-ballanheim-business-cards-embossed-white.webp" alt="" loading="lazy" decoding="async"><img src="img/ballanheim/05-ballanheim-invitation-cards-white-black.webp" alt="" loading="lazy" decoding="async"></span><span class="kw-gal-label" data-n="24">See all 24 photos</span></button>
+<div class="kw-gal-grid"><button type="button" class="kw-gal-item" data-i="0" aria-label="Open the photo large"><img src="img/ballanheim/01-ballanheim-campaign-banner-black-timber.webp" width="2000" height="1333" alt="Ballanheim campaign banner on a black timber hoarding" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="1" aria-label="Open the photo large"><img src="img/ballanheim/02-ballanheim-campaign-billboard-under-concrete.webp" width="2000" height="1333" alt="Ballanheim campaign billboard under a concrete canopy" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="2" aria-label="Open the photo large"><img src="img/ballanheim/03-ballanheim-campaign-poster-framed-weathered.webp" width="2000" height="1334" alt="Ballanheim campaign poster framed on a weathered wall" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="3" aria-label="Open the photo large"><img src="img/ballanheim/04-ballanheim-business-cards-embossed-white.webp" width="1344" height="896" alt="Ballanheim business cards embossed on white and black stock" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="4" aria-label="Open the photo large"><img src="img/ballanheim/05-ballanheim-invitation-cards-white-black.webp" width="1344" height="896" alt="Ballanheim invitation cards in white and black" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="5" aria-label="Open the photo large"><img src="img/ballanheim/06-blind-embossed-ballanheim-cards-concrete.webp" width="1344" height="896" alt="Blind-embossed Ballanheim cards on concrete" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="6" aria-label="Open the photo large"><img src="img/ballanheim/09-ballanheim-website-laptop.webp" width="2000" height="1333" alt="Ballanheim website on a laptop" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="7" aria-label="Open the photo large"><img src="img/ballanheim/10-ballanheim-horizontal-logo-black-white.webp" width="1344" height="896" alt="Ballanheim horizontal logo, black on white" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="8" aria-label="Open the photo large"><img src="img/ballanheim/11-ballanheim-horizontal-logo-white-black.webp" width="1344" height="896" alt="Ballanheim horizontal logo, white on black" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="9" aria-label="Open the photo large"><img src="img/ballanheim/12-ballanheim-wordmark-black-white.webp" width="1344" height="896" alt="Ballanheim wordmark, black on white" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="10" aria-label="Open the photo large"><img src="img/ballanheim/13-ballanheim-wordmark-white-black.webp" width="1344" height="896" alt="Ballanheim wordmark, white on black" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="11" aria-label="Open the photo large"><img src="img/ballanheim/ballanheim-seal-white-ground.webp" width="900" height="600" alt="Ballanheim seal, black on white" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="12" aria-label="Open the photo large"><img src="img/ballanheim/15-ballanheim-seal-white-black.webp" width="1344" height="896" alt="Ballanheim seal, white on black" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="13" aria-label="Open the photo large"><img src="img/ballanheim/helvetica-neue-specimen-ballanheim-identity.webp" width="1600" height="900" alt="Helvetica Neue specimen from the Ballanheim identity" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="14" aria-label="Open the photo large"><img src="img/ballanheim/17-model-holding-weighted-pole-bare-concrete.webp" width="1600" height="1067" alt="Model holding a weighted pole in a bare concrete room" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="15" aria-label="Open the photo large"><img src="img/ballanheim/18-model-carrying-weighted-bar-across-shoulders.webp" width="1600" height="1067" alt="Model carrying the weighted bar across the shoulders" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="16" aria-label="Open the photo large"><img src="img/ballanheim/19-model-concrete-block-over-one-shoulder.webp" width="1067" height="1600" alt="Model with a concrete block over one shoulder" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="17" aria-label="Open the photo large"><img src="img/ballanheim/20-model-leaning-peeling-wall-beside-factory.webp" width="1067" height="1600" alt="Model leaning on a peeling wall beside a factory window" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="18" aria-label="Open the photo large"><img src="img/ballanheim/21-model-tartan-jacket-tiara-crouching-against.webp" width="1600" height="1067" alt="Model in a tartan jacket and tiara crouching against tiles" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="19" aria-label="Open the photo large"><img src="img/ballanheim/22-two-models-blue-tiled-room-one-red-dress.webp" width="1067" height="1600" alt="Two models in a blue-tiled room, one in a red dress" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="20" aria-label="Open the photo large"><img src="img/ballanheim/24-model-red-dress-rusted-railing-platform.webp" width="1067" height="1600" alt="Model in a red dress on a rusted railing platform" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="21" aria-label="Open the photo large"><img src="img/ballanheim/25-two-models-large-industrial-window.webp" width="1600" height="1067" alt="Two models by a large industrial window" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="22" aria-label="Open the photo large"><img src="img/ballanheim/27-model-leaning-car-smashed-windscreen.webp" width="1067" height="1600" alt="Model leaning on a car with a smashed windscreen" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="23" aria-label="Open the photo large"><img src="img/ballanheim/28-model-leaning-against-white-caravan.webp" width="1067" height="1600" alt="Model leaning against a white caravan" loading="lazy" decoding="async"></button></div>
+</section>
 </div>
 <div class="kw-proj" id="bleibt">
 <article class="pg pg-hero">
@@ -335,42 +300,10 @@ html{scroll-snap-type:none}
 </article>
 <article class="pg pg-3d"><div class="kw3d kw3d-glass" id="glass3d"><img class="still" src="img/bleibt/still-second-date.webp" alt="bleibt glass with Second Date soda"><canvas role="img" aria-label="bleibt glass with Second Date soda, an aluminium twist lid and a paper tamper strip over the lid. Drag to turn it."></canvas><span class="kw3d-bar" aria-hidden="true"></span></div>
 <nav class="kw3d-flav" aria-label="bleibt sodas"><button type="button" data-slug="second-date" aria-pressed="true">Second Date</button><button type="button" data-slug="raucherraum" aria-pressed="false">Raucherraum</button><button type="button" data-slug="golden-hour" aria-pressed="false">Golden Hour</button><button type="button" data-slug="after-hours" aria-pressed="false">After Hours</button><button type="button" data-slug="soundcheck" aria-pressed="false">Soundcheck</button></nav></article>
-<article class="pg">
-<img class="shot" src="img/bleibt/01-bleibt-flavour-labels-five-sodas.webp" width="2592" height="1408" alt="The five bleibt flavour labels laid flat: Second Date, Raucherraum, Golden Hour, After Hours and Soundcheck" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/02-bleibt-tamper-strips-over-the-lid.webp" width="1352" height="1216" alt="The five bleibt tamper strips laid flat, with the wordmark on both ends and tear cuts where the lid edge sits" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/second-date-poster-folded-paper-flat-rhubarb-shape.webp" width="1600" height="1132" alt="Second Date poster on folded paper: a flat rhubarb shape cut by the 4 cl line and eight numbered rules" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/raucherraum-poster-folded-paper-flat-pear-shape-cut.webp" width="1600" height="1132" alt="Raucherraum poster on folded paper: a flat pear shape cut by the 4 cl line and nine rules" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/golden-hour-poster-folded-paper-flat-chili-shape.webp" width="1600" height="1132" alt="Golden Hour poster on folded paper: a flat chili shape cut by the 4 cl line and ten rules" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/after-hours-poster-folded-paper-flat-yuzu-halves.webp" width="1600" height="1132" alt="After Hours poster on folded paper: flat yuzu halves cut by the 4 cl line and nine rules" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/soundcheck-poster-folded-paper-flat-mate-gourd-cut.webp" width="1600" height="1132" alt="Soundcheck poster on folded paper: a flat mate gourd cut by the 4 cl line and ten rules" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/08-bleibt-golden-hour-poster-tree-shadows-wall.webp" width="1600" height="1600" alt="Golden Hour poster on a billboard under tree shadows" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/09-bleibt-second-date-poster-wheatpasted-paris-wall.webp" width="1472" height="1962" alt="Second Date poster wheat-pasted on a street wall, rubbish bags in front" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/10-bleibt-raucherraum-poster-lightbox-tiled-passage.webp" width="1605" height="900" alt="Raucherraum poster in a lightbox in a tiled underground passage" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/11-bleibt-after-hours-poster-car-park-billboard.webp" width="1470" height="980" alt="After Hours poster on a billboard in a car park, lit by two lamps" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bleibt/12-bleibt-soundcheck-poster-framed-board-concrete-wall.webp" width="1565" height="908" alt="Soundcheck poster in a frame on a concrete wall" loading="lazy" decoding="async">
-</article>
+<section class="kw-gal">
+<button type="button" class="kw-gal-open" aria-expanded="false"><span class="kw-gal-strip"><img src="img/bleibt/01-bleibt-flavour-labels-five-sodas.webp" alt="" loading="lazy" decoding="async"><img src="img/bleibt/02-bleibt-tamper-strips-over-the-lid.webp" alt="" loading="lazy" decoding="async"><img src="img/bleibt/poster-second-date-paper.jpg" alt="" loading="lazy" decoding="async"><img src="img/bleibt/poster-raucherraum-paper.jpg" alt="" loading="lazy" decoding="async"><img src="img/bleibt/poster-golden-hour-paper.jpg" alt="" loading="lazy" decoding="async"></span><span class="kw-gal-label" data-n="12">See all 12 photos</span></button>
+<div class="kw-gal-grid"><button type="button" class="kw-gal-item is-wide" data-i="0" aria-label="Open the photo large"><img src="img/bleibt/01-bleibt-flavour-labels-five-sodas.webp" width="2592" height="1408" alt="The five bleibt flavour labels laid flat: Second Date, Raucherraum, Golden Hour, After Hours and Soundcheck" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item is-wide" data-i="1" aria-label="Open the photo large"><img src="img/bleibt/02-bleibt-tamper-strips-over-the-lid.webp" width="1352" height="1216" alt="The five bleibt tamper strips laid flat, with the wordmark on both ends and tear cuts where the lid edge sits" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item is-wide" data-i="2" aria-label="Open the photo large"><img src="img/bleibt/poster-second-date-paper.jpg" width="2480" height="1754" alt="Second Date poster on folded paper: a flat rhubarb shape cut by the 4 cl line and eight numbered rules" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item is-wide" data-i="3" aria-label="Open the photo large"><img src="img/bleibt/poster-raucherraum-paper.jpg" width="2480" height="1754" alt="Raucherraum poster on folded paper: a flat pear shape cut by the 4 cl line and nine rules" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item is-wide" data-i="4" aria-label="Open the photo large"><img src="img/bleibt/poster-golden-hour-paper.jpg" width="2480" height="1754" alt="Golden Hour poster on folded paper: a flat chili shape cut by the 4 cl line and ten rules" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item is-wide" data-i="5" aria-label="Open the photo large"><img src="img/bleibt/poster-after-hours-paper.jpg" width="2480" height="1754" alt="After Hours poster on folded paper: flat yuzu halves cut by the 4 cl line and nine rules" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item is-wide" data-i="6" aria-label="Open the photo large"><img src="img/bleibt/poster-soundcheck-paper.jpg" width="2480" height="1754" alt="Soundcheck poster on folded paper: a flat mate gourd cut by the 4 cl line and ten rules" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="7" aria-label="Open the photo large"><img src="img/bleibt/08-bleibt-golden-hour-poster-tree-shadows-wall.webp" width="1600" height="1600" alt="Golden Hour poster on a billboard under tree shadows" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="8" aria-label="Open the photo large"><img src="img/bleibt/09-bleibt-second-date-poster-wheatpasted-paris-wall.webp" width="1472" height="1962" alt="Second Date poster wheat-pasted on a street wall, rubbish bags in front" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="9" aria-label="Open the photo large"><img src="img/bleibt/10-bleibt-raucherraum-poster-lightbox-tiled-passage.webp" width="1605" height="900" alt="Raucherraum poster in a lightbox in a tiled underground passage" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="10" aria-label="Open the photo large"><img src="img/bleibt/11-bleibt-after-hours-poster-car-park-billboard.webp" width="1470" height="980" alt="After Hours poster on a billboard in a car park, lit by two lamps" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="11" aria-label="Open the photo large"><img src="img/bleibt/12-bleibt-soundcheck-poster-framed-board-concrete-wall.webp" width="1565" height="908" alt="Soundcheck poster in a frame on a concrete wall" loading="lazy" decoding="async"></button></div>
+</section>
 </div>
 <div class="kw-proj" id="polishfem">
 <article class="pg pg-hero">
@@ -381,45 +314,10 @@ html{scroll-snap-type:none}
 <p>The idea came from a conversation with a friend of mine who is also from Poland. We realised how differently people read the two of us through gender, and how often she gets seen as the woman from the East.</p><p>I wanted the shoot to feel a little messy and play with that image. She’s the gangster’s girlfriend, and the gangster shows up too, wearing a balaclava.</p><p>The colours come from the Polish flag: white and red.</p><p>Her poses are provocative and free. They don’t need to mean anything beyond her being sexual. Nothing to add, nothing to take away.</p><p>I worked on the styling, art direction, photography and editing.</p>
 </div>
 </article>
-<article class="pg">
-<img class="shot" src="img/polishfem/02-polish-fem-hand-green-nails-white-line-red-tracksuit-sleeve.webp" width="2000" height="1333" alt="Hand with green nails on the white line of an artificial pitch, red tracksuit sleeve" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/model-red-tracksuit-lying-pitch-arm-along-white.webp" width="1600" height="2000" alt="Model in a red tracksuit lying on the pitch with one arm along the white line" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/04-polish-fem-model-red-tracksuit-sitting-on-pitch-line-boots.webp" width="2000" height="1333" alt="Model in a red tracksuit and black boots sitting on the pitch line" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/05-polish-fem-masked-man-holding-model-from-behind-green-fence.webp" width="1746" height="2000" alt="Man in a balaclava holding the model from behind against a green fence" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/06-polish-fem-model-floral-headscarf-white-cardigan-on-pitch.webp" width="2000" height="1333" alt="Model in a floral headscarf and white fur-trimmed cardigan on the pitch" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/07-polish-fem-model-white-cardigan-red-tights-on-all-fours-pitch.webp" width="2000" height="1333" alt="Model in a white cardigan and red tights on all fours on the pitch, looking back" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/08-polish-fem-red-tights-black-heels-on-turf-under-flash.webp" width="2000" height="1333" alt="Red tights and black heels on the turf under a flash" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/09-polish-fem-model-crawling-pitch-silver-heel-raised.webp" width="2000" height="1333" alt="Model crawling across the pitch with one silver heel raised" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/10-polish-fem-masked-man-leather-jacket-against-roller-shutter.webp" width="2000" height="1333" alt="Man in a balaclava and leather jacket against a roller shutter" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/11-polish-fem-model-fur-coat-headscarf-chair-in-street.webp" width="2000" height="1333" alt="Model in a fur coat and headscarf on a chair in the middle of a street at night" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/12-polish-fem-model-fur-coat-chair-white-van-passing.webp" width="2000" height="1333" alt="Model on the chair in the street as a white van passes" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/13-polish-fem-model-fur-coat-chair-parked-car-at-night.webp" width="1602" height="2000" alt="Model on the chair in front of a parked car at night" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/polishfem/14-polish-fem-masked-man-behind-model-on-chair-yellow-bus.webp" width="1601" height="2000" alt="Man in a balaclava standing behind the model on her chair, a yellow bus behind them" loading="lazy" decoding="async">
-</article>
+<section class="kw-gal">
+<button type="button" class="kw-gal-open" aria-expanded="false"><span class="kw-gal-strip"><img src="img/polishfem/02-polish-fem-hand-green-nails-white-line-red-tracksuit-sleeve.webp" alt="" loading="lazy" decoding="async"><img src="img/polishfem/07-polish-fem-model-white-cardigan-red-tights-on-all-fours-pitch.webp" alt="" loading="lazy" decoding="async"><img src="img/polishfem/08-polish-fem-red-tights-black-heels-on-turf-under-flash.webp" alt="" loading="lazy" decoding="async"><img src="img/polishfem/09-polish-fem-model-crawling-pitch-silver-heel-raised.webp" alt="" loading="lazy" decoding="async"><img src="img/polishfem/10-polish-fem-masked-man-leather-jacket-against-roller-shutter.webp" alt="" loading="lazy" decoding="async"></span><span class="kw-gal-label" data-n="6">See all 6 photos</span></button>
+<div class="kw-gal-grid"><button type="button" class="kw-gal-item" data-i="0" aria-label="Open the photo large"><img src="img/polishfem/02-polish-fem-hand-green-nails-white-line-red-tracksuit-sleeve.webp" width="2000" height="1333" alt="Hand with green nails on the white line of an artificial pitch, red tracksuit sleeve" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="1" aria-label="Open the photo large"><img src="img/polishfem/07-polish-fem-model-white-cardigan-red-tights-on-all-fours-pitch.webp" width="2000" height="1333" alt="Model in a white cardigan and red tights on all fours on the pitch, looking back" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="2" aria-label="Open the photo large"><img src="img/polishfem/08-polish-fem-red-tights-black-heels-on-turf-under-flash.webp" width="2000" height="1333" alt="Red tights and black heels on the turf under a flash" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="3" aria-label="Open the photo large"><img src="img/polishfem/09-polish-fem-model-crawling-pitch-silver-heel-raised.webp" width="2000" height="1333" alt="Model crawling across the pitch with one silver heel raised" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="4" aria-label="Open the photo large"><img src="img/polishfem/10-polish-fem-masked-man-leather-jacket-against-roller-shutter.webp" width="2000" height="1333" alt="Man in a balaclava and leather jacket against a roller shutter" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="5" aria-label="Open the photo large"><img src="img/polishfem/13-polish-fem-model-fur-coat-chair-parked-car-at-night.webp" width="1602" height="2000" alt="Model on the chair in front of a parked car at night" loading="lazy" decoding="async"></button></div>
+</section>
 </div>
 <div class="kw-proj" id="gbenga">
 <article class="pg pg-hero">
@@ -430,42 +328,10 @@ html{scroll-snap-type:none}
 <p>Gbenga is a very close friend I met two years ago, and he’s also an incredibly talented DJ on the rise.</p><p>He’s played all over, from Basement in NYC to clubs and venues around Berlin, including OXI and Kwia. He’s now based in Chicago and working on his own EP, which is coming out soon.</p><p>Some of these pictures became his press photos, and I also took care of the styling.</p><p>I wanted to capture that endless summer when we first met, when it felt like anything was possible for a young artist.</p><p class="ig"><a href="https://www.instagram.com/gbeng.a/" target="_blank" rel="noopener">@gbeng.a</a></p>
 </div>
 </article>
-<article class="pg">
-<img class="shot" src="img/gbenga/02-gbenga-leaning-white-wall-hands-behind-head.webp" width="1600" height="1067" alt="Gbenga leaning on a white wall with his hands behind his head" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/01-gbenga-white-tank-top-street-front-large.webp" width="1067" height="1600" alt="Gbenga in a white tank top on a street in front of a large housing block" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/04-gbenga-arms-crossed-grass-looking-side.webp" width="1600" height="1067" alt="Gbenga with arms crossed in the grass, looking to the side" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/05-gbenga-seen-below-against-rows-windows.webp" width="1067" height="1600" alt="Gbenga seen from below against rows of windows" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/06-gbenga-behind-stretching-arms-above-head.webp" width="1067" height="1600" alt="Gbenga from behind, stretching his arms above his head" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/07-gbenga-sitting-long-grass-silver-trainers.webp" width="1067" height="1600" alt="Gbenga sitting in long grass in silver trainers" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/08-gbenga-lying-pavement-beside-concrete-wall.webp" width="1600" height="1067" alt="Gbenga lying on the pavement beside a concrete wall" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/09-gbenga-hanging-scaffolding-outside-red.webp" width="1067" height="1600" alt="Gbenga hanging from scaffolding outside a red building" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/10-gbenga-silhouette-against-red-white-road.webp" width="1067" height="1600" alt="Gbenga in silhouette against a red and white road barrier at dusk" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/11-gbenga-yellow-light-beneath-large-number-9.webp" width="1067" height="1600" alt="Gbenga in yellow light beneath a large number 9" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/12-gbenga-against-roller-shutter-night.webp" width="1067" height="1600" alt="Gbenga against a roller shutter at night" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/gbenga/13-gbenga-sitting-glass-wall-next-reflection.webp" width="1067" height="1600" alt="Gbenga sitting by a glass wall next to his reflection" loading="lazy" decoding="async">
-</article>
+<section class="kw-gal">
+<button type="button" class="kw-gal-open" aria-expanded="false"><span class="kw-gal-strip"><img src="img/gbenga/02-gbenga-leaning-white-wall-hands-behind-head.webp" alt="" loading="lazy" decoding="async"><img src="img/gbenga/01-gbenga-white-tank-top-street-front-large.webp" alt="" loading="lazy" decoding="async"><img src="img/gbenga/04-gbenga-arms-crossed-grass-looking-side.webp" alt="" loading="lazy" decoding="async"><img src="img/gbenga/05-gbenga-seen-below-against-rows-windows.webp" alt="" loading="lazy" decoding="async"><img src="img/gbenga/06-gbenga-behind-stretching-arms-above-head.webp" alt="" loading="lazy" decoding="async"></span><span class="kw-gal-label" data-n="12">See all 12 photos</span></button>
+<div class="kw-gal-grid"><button type="button" class="kw-gal-item" data-i="0" aria-label="Open the photo large"><img src="img/gbenga/02-gbenga-leaning-white-wall-hands-behind-head.webp" width="1600" height="1067" alt="Gbenga leaning on a white wall with his hands behind his head" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="1" aria-label="Open the photo large"><img src="img/gbenga/01-gbenga-white-tank-top-street-front-large.webp" width="1067" height="1600" alt="Gbenga in a white tank top on a street in front of a large housing block" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="2" aria-label="Open the photo large"><img src="img/gbenga/04-gbenga-arms-crossed-grass-looking-side.webp" width="1600" height="1067" alt="Gbenga with arms crossed in the grass, looking to the side" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="3" aria-label="Open the photo large"><img src="img/gbenga/05-gbenga-seen-below-against-rows-windows.webp" width="1067" height="1600" alt="Gbenga seen from below against rows of windows" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="4" aria-label="Open the photo large"><img src="img/gbenga/06-gbenga-behind-stretching-arms-above-head.webp" width="1067" height="1600" alt="Gbenga from behind, stretching his arms above his head" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="5" aria-label="Open the photo large"><img src="img/gbenga/07-gbenga-sitting-long-grass-silver-trainers.webp" width="1067" height="1600" alt="Gbenga sitting in long grass in silver trainers" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="6" aria-label="Open the photo large"><img src="img/gbenga/08-gbenga-lying-pavement-beside-concrete-wall.webp" width="1600" height="1067" alt="Gbenga lying on the pavement beside a concrete wall" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="7" aria-label="Open the photo large"><img src="img/gbenga/09-gbenga-hanging-scaffolding-outside-red.webp" width="1067" height="1600" alt="Gbenga hanging from scaffolding outside a red building" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="8" aria-label="Open the photo large"><img src="img/gbenga/10-gbenga-silhouette-against-red-white-road.webp" width="1067" height="1600" alt="Gbenga in silhouette against a red and white road barrier at dusk" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="9" aria-label="Open the photo large"><img src="img/gbenga/11-gbenga-yellow-light-beneath-large-number-9.webp" width="1067" height="1600" alt="Gbenga in yellow light beneath a large number 9" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="10" aria-label="Open the photo large"><img src="img/gbenga/12-gbenga-against-roller-shutter-night.webp" width="1067" height="1600" alt="Gbenga against a roller shutter at night" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="11" aria-label="Open the photo large"><img src="img/gbenga/13-gbenga-sitting-glass-wall-next-reflection.webp" width="1067" height="1600" alt="Gbenga sitting by a glass wall next to his reflection" loading="lazy" decoding="async"></button></div>
+</section>
 </div>
 <div class="kw-proj" id="bbyaga">
 <article class="pg pg-hero">
@@ -476,39 +342,10 @@ html{scroll-snap-type:none}
 <p>Zola, whose designs you can see in the photos, was looking for a photographer who could capture a bit of queer, carefree joy in her parents’ fabric factory.</p><p>She grew up surrounded by fashion and has always known she wanted to make something unapologetically different.</p><p>Her clothes are weird and unusual in the best way, and reflect the energy she’s found in Berlin over the past few years.</p><p class="ig"><a href="https://www.instagram.com/bbyaga_zola/" target="_blank" rel="noopener">@bbyaga_zola</a></p>
 </div>
 </article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/02-model-spiked-black-wig-patched-wide-leg.webp" width="1067" height="1600" alt="Model in a spiked black wig and patched wide-leg jeans among fabric rolls" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/03-model-spiked-black-wig-holding-steel-pole.webp" width="1067" height="1600" alt="Model in a spiked black wig holding a steel pole beside stacked cardboard tubes" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/04-model-spiked-black-wig-one-arm-raised.webp" width="1067" height="1600" alt="Model in a spiked black wig with one arm raised against a green wall" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/05-model-striped-stockings-heels-leaning-into.webp" width="1067" height="1600" alt="Model in striped stockings and heels leaning into an orange fabric cross, seen from behind" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/06-model-fur-hat-green-bleached-hoodie-front.webp" width="1067" height="1600" alt="Model in a fur hat and green bleached hoodie in front of shelves of thread boxes" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/07-model-pink-wig-fur-leg-warmers-standing.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers standing on a sewing table" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/08-model-pink-wig-fur-leg-warmers-beside-row.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers beside a row of lockers" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/09-model-stacked-caps-sitting-pile-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps sitting on a pile of fabric rolls, holding scissors" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/10-model-stacked-caps-standing-fabric-rolls.webp" width="1067" height="1600" alt="Model in stacked caps standing on fabric rolls with arms spread" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/11-model-stacked-caps-lying-across-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps lying across fabric rolls" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/bbyaga/12-model-patchwork-t-shirt-gown-blonde-curly.webp" width="1067" height="1600" alt="Model in a patchwork T-shirt gown and blonde curly wig among sewing machines" loading="lazy" decoding="async">
-</article>
+<section class="kw-gal">
+<button type="button" class="kw-gal-open" aria-expanded="false"><span class="kw-gal-strip"><img src="img/bbyaga/02-model-spiked-black-wig-patched-wide-leg.webp" alt="" loading="lazy" decoding="async"><img src="img/bbyaga/03-model-spiked-black-wig-holding-steel-pole.webp" alt="" loading="lazy" decoding="async"><img src="img/bbyaga/04-model-spiked-black-wig-one-arm-raised.webp" alt="" loading="lazy" decoding="async"><img src="img/bbyaga/05-model-striped-stockings-heels-leaning-into.webp" alt="" loading="lazy" decoding="async"><img src="img/bbyaga/06-model-fur-hat-green-bleached-hoodie-front.webp" alt="" loading="lazy" decoding="async"></span><span class="kw-gal-label" data-n="11">See all 11 photos</span></button>
+<div class="kw-gal-grid"><button type="button" class="kw-gal-item" data-i="0" aria-label="Open the photo large"><img src="img/bbyaga/02-model-spiked-black-wig-patched-wide-leg.webp" width="1067" height="1600" alt="Model in a spiked black wig and patched wide-leg jeans among fabric rolls" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="1" aria-label="Open the photo large"><img src="img/bbyaga/03-model-spiked-black-wig-holding-steel-pole.webp" width="1067" height="1600" alt="Model in a spiked black wig holding a steel pole beside stacked cardboard tubes" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="2" aria-label="Open the photo large"><img src="img/bbyaga/04-model-spiked-black-wig-one-arm-raised.webp" width="1067" height="1600" alt="Model in a spiked black wig with one arm raised against a green wall" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="3" aria-label="Open the photo large"><img src="img/bbyaga/05-model-striped-stockings-heels-leaning-into.webp" width="1067" height="1600" alt="Model in striped stockings and heels leaning into an orange fabric cross, seen from behind" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="4" aria-label="Open the photo large"><img src="img/bbyaga/06-model-fur-hat-green-bleached-hoodie-front.webp" width="1067" height="1600" alt="Model in a fur hat and green bleached hoodie in front of shelves of thread boxes" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="5" aria-label="Open the photo large"><img src="img/bbyaga/07-model-pink-wig-fur-leg-warmers-standing.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers standing on a sewing table" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="6" aria-label="Open the photo large"><img src="img/bbyaga/08-model-pink-wig-fur-leg-warmers-beside-row.webp" width="1067" height="1600" alt="Model in a pink wig and fur leg warmers beside a row of lockers" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="7" aria-label="Open the photo large"><img src="img/bbyaga/09-model-stacked-caps-sitting-pile-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps sitting on a pile of fabric rolls, holding scissors" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="8" aria-label="Open the photo large"><img src="img/bbyaga/10-model-stacked-caps-standing-fabric-rolls.webp" width="1067" height="1600" alt="Model in stacked caps standing on fabric rolls with arms spread" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="9" aria-label="Open the photo large"><img src="img/bbyaga/11-model-stacked-caps-lying-across-fabric-rolls.webp" width="1600" height="1067" alt="Model in stacked caps lying across fabric rolls" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="10" aria-label="Open the photo large"><img src="img/bbyaga/12-model-patchwork-t-shirt-gown-blonde-curly.webp" width="1067" height="1600" alt="Model in a patchwork T-shirt gown and blonde curly wig among sewing machines" loading="lazy" decoding="async"></button></div>
+</section>
 </div>
 <div class="kw-proj" id="ulia">
 <article class="pg pg-hero">
@@ -519,20 +356,19 @@ html{scroll-snap-type:none}
 <p>There aren’t many pictures here, but I think they capture what we were going for: a wild girl who needs no one and is on the hunt.</p><p>On a freezing day in the middle of the Berlin winter, we spent hours figuring out how to show the strong woman she is.</p><p>I wanted to capture her waiting for prey, with an expression closer to a wild animal than to a subtle, fragile girly girl.</p><p>Ulia is still one of my role models. She’s one of the strongest and most creative people I know, and always has another idea up her sleeve.</p>
 </div>
 </article>
-<article class="pg">
-<img class="shot" src="img/ulia/02-ulia-crouching-snow-green-tights-reaching.webp" width="1280" height="1600" alt="Ulia crouching in the snow in green tights, reaching for her shoe" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ulia/01-ulia-bent-over-snow-covered-wall-green.webp" width="1280" height="1600" alt="Ulia bent over a snow-covered wall in green tights and clear platform heels" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ulia/04-ulia-crouched-low-snow-fur-coat-hair-falling.webp" width="1280" height="1600" alt="Ulia crouched low in the snow in a fur coat, her hair falling over the ground" loading="lazy" decoding="async">
-</article>
-<article class="pg">
-<img class="shot" src="img/ulia/05-ulia-lying-snow-white-tights-heels.webp" width="1280" height="1600" alt="Ulia lying in the snow in white tights and heels" loading="lazy" decoding="async">
-</article>
+<section class="kw-gal">
+<button type="button" class="kw-gal-open" aria-expanded="false"><span class="kw-gal-strip"><img src="img/ulia/02-ulia-crouching-snow-green-tights-reaching.webp" alt="" loading="lazy" decoding="async"><img src="img/ulia/01-ulia-bent-over-snow-covered-wall-green.webp" alt="" loading="lazy" decoding="async"><img src="img/ulia/04-ulia-crouched-low-snow-fur-coat-hair-falling.webp" alt="" loading="lazy" decoding="async"><img src="img/ulia/05-ulia-lying-snow-white-tights-heels.webp" alt="" loading="lazy" decoding="async"></span><span class="kw-gal-label" data-n="4">See all 4 photos</span></button>
+<div class="kw-gal-grid"><button type="button" class="kw-gal-item" data-i="0" aria-label="Open the photo large"><img src="img/ulia/02-ulia-crouching-snow-green-tights-reaching.webp" width="1280" height="1600" alt="Ulia crouching in the snow in green tights, reaching for her shoe" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="1" aria-label="Open the photo large"><img src="img/ulia/01-ulia-bent-over-snow-covered-wall-green.webp" width="1280" height="1600" alt="Ulia bent over a snow-covered wall in green tights and clear platform heels" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="2" aria-label="Open the photo large"><img src="img/ulia/04-ulia-crouched-low-snow-fur-coat-hair-falling.webp" width="1280" height="1600" alt="Ulia crouched low in the snow in a fur coat, her hair falling over the ground" loading="lazy" decoding="async"></button><button type="button" class="kw-gal-item" data-i="3" aria-label="Open the photo large"><img src="img/ulia/05-ulia-lying-snow-white-tights-heels.webp" width="1280" height="1600" alt="Ulia lying in the snow in white tights and heels" loading="lazy" decoding="async"></button></div>
+</section>
 </div>
 
+</div>
+
+<div class="kw-lb" id="kw-lb" hidden role="dialog" aria-modal="true" aria-label="Photo">
+<img alt="">
+<button type="button" class="kw-lb-arr kw-lb-prev" aria-label="Previous photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M14.5 4.5 6.5 12l8 7.5"></path></svg></button>
+<button type="button" class="kw-lb-arr kw-lb-next" aria-label="Next photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M9.5 4.5 17.5 12l-8 7.5"></path></svg></button>
+<button type="button" class="kw-lb-close">Close</button>
 </div>
 
 <div class="kw-foot">
