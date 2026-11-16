@@ -84,7 +84,8 @@
       var open = !sec.classList.contains('is-open');
       sec.classList.toggle('is-open', open);
       btn.setAttribute('aria-expanded', String(open));
-      label.textContent = open ? 'Hide photos' : 'See all ' + label.getAttribute('data-n') + ' photos';
+      var word = label.getAttribute('data-word') || 'photos';
+      label.textContent = open ? 'Hide ' + word : 'See all ' + label.getAttribute('data-n') + ' ' + word;
       if (!open) sec.scrollIntoView({ block: 'nearest' });
       onScroll();
     });
