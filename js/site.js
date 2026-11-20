@@ -123,6 +123,12 @@
   }
   update();
 
+  // short loops play on their own, but not for people who asked for less motion
+  var loops = document.querySelectorAll('video.kw-loop');
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    for (var v = 0; v < loops.length; v++) { loops[v].removeAttribute('autoplay'); loops[v].pause(); }
+  }
+
   // the Ballanheim coin
   var coinBox = document.getElementById('coin3d');
   if (coinBox && window.KWCoin) {
